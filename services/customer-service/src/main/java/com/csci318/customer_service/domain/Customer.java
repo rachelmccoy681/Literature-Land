@@ -1,5 +1,6 @@
 package com.csci318.customer_service.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,8 +16,13 @@ public class Customer {
 
     // customer details
     private String name;
+    private String username;
     private String email;
     private String phone;
+
+    // stores the hashed password
+    @JsonIgnore
+    private String passwordHash;
 
     // empty constructor needed for jpa
     public Customer() {
@@ -38,12 +44,20 @@ public class Customer {
         return name;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     // setters
@@ -55,11 +69,19 @@ public class Customer {
         this.name = name;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 }
