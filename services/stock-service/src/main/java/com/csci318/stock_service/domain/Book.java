@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Book {
 
-    // each book = own ID
+    // each book has its own ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +17,11 @@ public class Book {
     private String title;
     private String author;
     private String genre;
+    private String description;
     private double price;
+
+    // book rating out of 5
+    private double rating;
 
     // number of copies currently in stock
     private int stockQuantity;
@@ -49,8 +53,16 @@ public class Book {
         return genre;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public double getPrice() {
         return price;
+    }
+
+    public double getRating() {
+        return rating;
     }
 
     public int getStockQuantity() {
@@ -73,8 +85,16 @@ public class Book {
         this.genre = genre;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public void setStockQuantity(int stockQuantity) {
