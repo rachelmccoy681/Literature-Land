@@ -1,8 +1,8 @@
 # Literature-Land
 
 To run the program, navigate to the service directory and type:
-./mvnw clean test
-./mvnw spring-boot:run
+`./mvnw clean test`
+`./mvnw spring-boot:run`
 then use a second terminal to send requests as provided below.
 
 ## Cart and wishlist service API
@@ -28,7 +28,7 @@ using `curl`, Postman, or another HTTP client. The examples use customer ID
 | `GET` | `/api/wishlists/{customerId}` | Return the customer's saved books. |
 | `DELETE` | `/api/wishlists/{customerId}/items/{bookId}` | Remove a saved book. |
 
-### Try it with curl
+### examples
 
 Run these commands in a terminal while the service is running. Start the
 service in one terminal from `services/cart-service`:
