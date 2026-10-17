@@ -1,8 +1,8 @@
 # Literature-Land
 
 To run the program, navigate to the service directory and type:
-`./mvnw clean test`
-`./mvnw spring-boot:run`
+`./mvnw clean test` and
+`./mvnw spring-boot:run`,
 then use a second terminal to send requests as provided below.
 
 ## Cart and wishlist service API
@@ -72,7 +72,3 @@ curl -i http://localhost:8082/api/wishlists/25
 
 curl -i -X DELETE http://localhost:8082/api/wishlists/25/items/1
 ```
-
-Book and customer IDs and cart item quantities must be positive integers.
-The first add creates a cart or wishlist. Getting a cart or wishlist that has
-not been created, or removing a book that is not present, returns `404`.
