@@ -68,6 +68,13 @@ public class CartService {
 		cartRepository.save(cart);
 	}
 
+	public void clearItems(Long customerId) {
+		requirePositive(customerId, "customerId");
+		Cart cart = findCart(customerId);
+		cart.clearItems();
+		cartRepository.save(cart);
+	}
+
 	private Cart findCart(Long customerId) {
 		return cartRepository.findById(customerId)
 				.orElseThrow(() -> new CartNotFoundException(customerId));

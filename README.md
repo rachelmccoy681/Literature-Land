@@ -73,3 +73,37 @@ curl -i -X DELETE http://localhost:8082/api/wishlists/25/items/1
 Book and customer IDs and cart item quantities must be positive integers.
 The first add creates a cart or wishlist. Getting a cart or wishlist that has
 not been created, or removing a book that is not present, returns `404`.
+
+## Checkout and order history
+
+Checkout is a dummy transaction: it does not collect payment details or charge
+money. It records the books and quantities from the customer's cart as an
+order, then clears the cart. Wishlist contents are not changed.
+
+Run all three services in separate terminals:
+
+```sh
+cd services/cart-service && ./mvnw spring-boot:run
+cd services/order-service && ./mvnw spring-boot:run
+cd services/payment-service && ./mvnw spring-boot:run
+```
+
+The services listen on ports `8082` (cart), `8083` (order history), and `8084`
+(checkout). Add at least one item to the cart, then start checkout:
+
+```sh
+curl -i -X POST http://localhost:8084/api/payments/25/checkout
+```
+
+A successful checkout returns `201 Created` with the created order's ID,
+timestamp, books, and quantities. To view recent orders:
+
+```sh
+curl -i http://localhost:8083/api/orders/25
+```
+
+An empty or missing cart returns `409 Conflict`; checkout does not create an
+order in that case. If an order was recorded but the cart could not be cleared,
+the checkout response reports its ID so the customer does not retry and create
+a duplicate. Payment service URLs can be configured with `CART_SERVICE_URL`
+and `ORDER_SERVICE_URL` environment variables.
