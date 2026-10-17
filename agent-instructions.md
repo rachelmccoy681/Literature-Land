@@ -1,0 +1,1 @@
+CRITICAL BOUNDARY: The /specs/ directory is STRICTLY READ-ONLY for you. You must never edit specification files.
