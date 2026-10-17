@@ -1,6 +1,7 @@
 package com.csci318.cart_service;
 
 import com.csci318.cart_service.repository.CartRepository;
+import com.csci318.cart_service.repository.WishlistRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,13 @@ class CartServiceApplicationTests {
 	@Autowired
 	private CartRepository cartRepository;
 
+	@Autowired
+	private WishlistRepository wishlistRepository;
+
 	@BeforeEach
-	void clearCarts() {
+	void clearCartsAndWishlists() {
 		cartRepository.deleteAll();
+		wishlistRepository.deleteAll();
 	}
 
 	@Test
@@ -93,10 +98,60 @@ class CartServiceApplicationTests {
 				.andExpect(status().isBadRequest());
 	}
 
+	@Test
+	void addsListsAndRemovesWishlistItemsWithoutDuplicates() throws Exception {
+		addWishlistItem(25, 3);
+		addWishlistItem(25, 1);
+		addWishlistItem(25, 3);
+
+		mockMvc.perform(get("/api/wishlists/25"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.customerId").value(25))
+				.andExpect(jsonPath("$.items.length()").value(2))
+				.andExpect(jsonPath("$.items[0].bookId").value(1))
+				.andExpect(jsonPath("$.items[1].bookId").value(3));
+
+		mockMvc.perform(delete("/api/wishlists/25/items/3"))
+				.andExpect(status().isNoContent());
+
+		mockMvc.perform(get("/api/wishlists/25"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.items.length()").value(1))
+				.andExpect(jsonPath("$.items[0].bookId").value(1));
+	}
+
+	@Test
+	void rejectsInvalidWishlistRequestsAndReportsMissingWishlistItems() throws Exception {
+		mockMvc.perform(post("/api/wishlists/25/items")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"bookId\":0}"))
+				.andExpect(status().isBadRequest());
+
+		mockMvc.perform(get("/api/wishlists/25"))
+				.andExpect(status().isNotFound());
+
+		addWishlistItem(25, 1);
+		mockMvc.perform(delete("/api/wishlists/25/items/3"))
+				.andExpect(status().isNotFound());
+	}
+
+	@Test
+	void rejectsNonPositiveWishlistPathIds() throws Exception {
+		mockMvc.perform(get("/api/wishlists/0"))
+				.andExpect(status().isBadRequest());
+	}
+
 	private void addItem(long customerId, long bookId, int quantity) throws Exception {
 		mockMvc.perform(post("/api/carts/{customerId}/items", customerId)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content("{\"bookId\":" + bookId + ",\"quantity\":" + quantity + "}"))
+				.andExpect(status().isOk());
+	}
+
+	private void addWishlistItem(long customerId, long bookId) throws Exception {
+		mockMvc.perform(post("/api/wishlists/{customerId}/items", customerId)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"bookId\":" + bookId + "}"))
 				.andExpect(status().isOk());
 	}
 }
