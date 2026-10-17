@@ -1,10 +1,13 @@
 # Literature-Land
 
+To run the program, navigate to the service directory and type:
+./mvnw clean test
+./mvnw spring-boot:run
+then use a second terminal to send requests as provided below.
+
 ## Cart and wishlist service API
 
-The service runs on port `8082`. It is a REST API, not a web page: opening
-`http://localhost:8082/` in a browser may show Spring Boot's Whitelabel 404
-page because there is no route at `/`. Send requests to the API paths below
+The service runs on port `8082`. Send requests to the API paths below
 using `curl`, Postman, or another HTTP client. The examples use customer ID
 `25`; replace it with the ID you want to use.
 
