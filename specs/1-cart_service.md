@@ -32,4 +32,4 @@ A wishlist allows customers to store and review selected books to further evalua
 
 A customer can add a book to their wishlist, view the saved book and remove it when it is no longer required or has been purchased.
 
-The wishlist should follow a similar template to the cart, where items can be added and removed from it. the cart itself will contain a button to purchase/checkout the items, where a dummy transactional screen (that doesnt actually ask for payment) allows the user to add it to their account.
+The wishlist should follow a similar template to the cart, where items can be added and removed from it. 
