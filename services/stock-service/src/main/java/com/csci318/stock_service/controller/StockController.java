@@ -5,6 +5,7 @@ import com.csci318.stock_service.service.StockService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,5 +53,14 @@ public class StockController {
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable Long id) {
         return stockService.getBookById(id);
+    }
+
+    // reduces stock when books are purchased
+    @PostMapping("/{id}/reduce-stock")
+    public Book reduceStock(
+            @PathVariable Long id,
+            @RequestParam int quantity) {
+
+        return stockService.reduceStock(id, quantity);
     }
 }

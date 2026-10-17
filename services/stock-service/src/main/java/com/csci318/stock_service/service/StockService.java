@@ -92,4 +92,33 @@ public class StockService {
                         "Book not found"
                 ));
     }
+
+    // reduces stock when books are purchased
+    public Book reduceStock(Long id, int quantity) {
+
+        // checks that the quantity is valid
+        if (quantity <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "quantity must be greater than zero"
+            );
+        }
+
+        // finds the book
+        Book book = getBookById(id);
+
+        // checks if enough stock is available
+        if (book.getStockQuantity() < quantity) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "not enough stock available"
+            );
+        }
+
+        // updates the stock quantity
+        book.setStockQuantity(book.getStockQuantity() - quantity);
+
+        // saves the updated stock
+        return bookRepository.save(book);
+    }
 }
