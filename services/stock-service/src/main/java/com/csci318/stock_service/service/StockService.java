@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -94,6 +95,7 @@ public class StockService {
     }
 
     // reduces stock when books are purchased
+    @Transactional
     public Book reduceStock(Long id, int quantity) {
 
         // checks that the quantity is valid
@@ -104,8 +106,12 @@ public class StockService {
             );
         }
 
-        // finds the book
-        Book book = getBookById(id);
+        // finds and locks the book
+        Book book = bookRepository.findByIdForUpdate(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Book not found"
+                ));
 
         // checks if enough stock is available
         if (book.getStockQuantity() < quantity) {
