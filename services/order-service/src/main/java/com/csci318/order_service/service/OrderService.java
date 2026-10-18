@@ -61,16 +61,6 @@ public class OrderService {
             }
         }
 
-        // reduces stock for all books in the order
-        try {
-            stockClient.reduceStockForOrder(items);
-        } catch (HttpClientErrorException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "order could not be placed because a book is unavailable"
-            );
-        }
-
         // creates a new order
         Order order = new Order(customerId);
         order = orderRepository.save(order);
@@ -84,6 +74,16 @@ public class OrderService {
             );
 
             orderItemRepository.save(orderItem);
+        }
+
+        // reduces stock after saving the order details
+        try {
+            stockClient.reduceStockForOrder(items);
+        } catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "order could not be placed because a book is unavailable"
+            );
         }
 
         return order;
