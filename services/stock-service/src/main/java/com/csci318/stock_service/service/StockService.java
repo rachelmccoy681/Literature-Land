@@ -2,6 +2,7 @@ package com.csci318.stock_service.service;
 
 import com.csci318.stock_service.domain.Book;
 import com.csci318.stock_service.repository.BookRepository;
+import com.csci318.stock_service.request.StockRequest;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class StockService {
@@ -126,5 +129,87 @@ public class StockService {
 
         // saves the updated stock
         return bookRepository.save(book);
+    }
+
+    // reduces stock for all books in an order
+    @Transactional
+    public void reduceStockForOrder(List<StockRequest> items) {
+
+        // checks that the order contains books
+        if (items == null || items.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "order must contain at least one book"
+            );
+        }
+
+        // combines quantities if the same book appears twice
+        Map<Long, Integer> quantities = new TreeMap<>();
+
+        for (StockRequest item : items) {
+
+            // checks book ID and quantity
+            if (item == null || item.getBookId() == null ||
+                    item.getBookId() <= 0 || item.getQuantity() <= 0) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "invalid book ID or quantity"
+                );
+            }
+
+            try {
+                quantities.merge(
+                        item.getBookId(),
+                        item.getQuantity(),
+                        Math::addExact
+                );
+            } catch (ArithmeticException e) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "quantity is too large"
+                );
+            }
+        }
+
+        // locks books in ID order to reduce deadlock risk
+        Map<Long, Book> books = new TreeMap<>();
+
+        for (Long bookId : quantities.keySet()) {
+
+            Book book = bookRepository.findByIdForUpdate(bookId)
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "book not found: " + bookId
+                    ));
+
+            books.put(bookId, book);
+        }
+
+        // checks stock before reducing anything
+        for (Long bookId : quantities.keySet()) {
+
+            Book book = books.get(bookId);
+            int quantity = quantities.get(bookId);
+
+            if (book.getStockQuantity() < quantity) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "not enough stock for book " + bookId
+                );
+            }
+        }
+
+        // reduces stock for all books
+        for (Long bookId : quantities.keySet()) {
+
+            Book book = books.get(bookId);
+            int quantity = quantities.get(bookId);
+
+            book.setStockQuantity(
+                    book.getStockQuantity() - quantity
+            );
+
+            bookRepository.save(book);
+        }
     }
 }
