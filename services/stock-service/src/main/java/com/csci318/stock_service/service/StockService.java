@@ -3,12 +3,15 @@ package com.csci318.stock_service.service;
 import com.csci318.stock_service.domain.Book;
 import com.csci318.stock_service.repository.BookRepository;
 import com.csci318.stock_service.request.StockRequest;
+import com.csci318.stock_service.messaging.StockEventPublisher;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.List;
 import java.util.Map;
@@ -18,10 +21,15 @@ import java.util.TreeMap;
 public class StockService {
 
     private final BookRepository bookRepository;
+    private final StockEventPublisher stockEventPublisher;
 
-    // connects stock service to book repository
-    public StockService(BookRepository bookRepository) {
+    // connects stock service to book repository and Kafka publisher
+    public StockService(
+            BookRepository bookRepository,
+            StockEventPublisher stockEventPublisher) {
+
         this.bookRepository = bookRepository;
+        this.stockEventPublisher = stockEventPublisher;
     }
 
     // gets all books stored in the database
@@ -128,7 +136,15 @@ public class StockService {
         book.setStockQuantity(book.getStockQuantity() - quantity);
 
         // saves the updated stock
-        return bookRepository.save(book);
+        Book savedBook = bookRepository.save(book);
+
+        // sends Kafka event only after the transaction succeeds
+        publishStockUpdateAfterCommit(
+                savedBook.getId(),
+                savedBook.getStockQuantity()
+        );
+
+        return savedBook;
     }
 
     // reduces stock for all books in an order
@@ -210,6 +226,29 @@ public class StockService {
             );
 
             bookRepository.save(book);
+
+            // sends Kafka event after the entire order transaction succeeds
+            publishStockUpdateAfterCommit(
+                    book.getId(),
+                    book.getStockQuantity()
+            );
         }
+    }
+
+    // sends stock updates to Kafka after the database transaction succeeds
+    private void publishStockUpdateAfterCommit(Long bookId, int stockQuantity) {
+
+        TransactionSynchronizationManager.registerSynchronization(
+                new TransactionSynchronization() {
+
+                    @Override
+                    public void afterCommit() {
+                        stockEventPublisher.publishStockUpdated(
+                                bookId,
+                                stockQuantity
+                        );
+                    }
+                }
+        );
     }
 }
