@@ -3,6 +3,9 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/order-history.mv.db
+/order-history.lock.db
+/order-history.trace.db
 
 ### STS ###
 .apt_generated

@@ -141,6 +141,20 @@ class CartServiceApplicationTests {
 				.andExpect(status().isBadRequest());
 	}
 
+	@Test
+	void clearsAllCartItemsAndKeepsTheCartAvailable() throws Exception {
+		addItem(25, 1, 2);
+		addItem(25, 3, 1);
+
+		mockMvc.perform(delete("/api/carts/25/items"))
+				.andExpect(status().isNoContent());
+
+		mockMvc.perform(get("/api/carts/25"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.items").isEmpty())
+				.andExpect(jsonPath("$.totalQuantity").value(0));
+	}
+
 	private void addItem(long customerId, long bookId, int quantity) throws Exception {
 		mockMvc.perform(post("/api/carts/{customerId}/items", customerId)
 						.contentType(MediaType.APPLICATION_JSON)
