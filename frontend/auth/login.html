@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Literature Land</title>
+
+    <!-- GLOBAL STYLESHEET -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- LOGIN STYLESHEET -->
+    <link rel="stylesheet" href="login.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE LAYOUT -->
+    <div class="page-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="auth-main">
+
+            <div class="auth-container">
+
+                <!-- PAGE HEADING -->
+                <div class="auth-heading">
+                    <h1>Welcome to Literature Land</h1>
+                    <p>Log into your account or create a new account to start your reading journey.</p>
+                </div>
+
+                <!-- ACCOUNT FORM -->
+                <div class="auth-card">
+
+                    <!-- TABS -->
+                    <div class="auth-tabs">
+
+                        <button type="button" id="loginTab" class="auth-tab active">
+                            Login
+                        </button>
+
+                        <button type="button" id="registerTab" class="auth-tab">
+                            Create Account
+                        </button>
+
+                    </div>
+
+                    <!-- LOGIN FORM -->
+                    <section class="auth-section" id="loginSection">
+
+                        <p class="form-description">
+                            Log in to access your account.
+                        </p>
+
+                        <form id="loginForm">
+
+                            <!-- EMAIL -->
+                            <div class="form-group">
+
+                                <label for="loginEmail">Email Address *</label>
+
+                                <input
+                                    type="email"
+                                    id="loginEmail"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    autocomplete="email"
+                                    required
+                                >
+
+                            </div>
+
+                            <!-- PASSWORD -->
+                            <div class="form-group">
+
+                                <label for="loginPassword">Password *</label>
+
+                                <div class="password-field">
+
+                                    <input
+                                        type="password"
+                                        id="loginPassword"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        autocomplete="current-password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="loginPassword"
+                                        aria-label="Show password"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                                <a href="#" id="forgotPassword" class="forgot-password">
+                                    Forgot Password?
+                                </a>
+
+                            </div>
+
+                            <!-- REMEMBER ME -->
+                            <label class="remember-me">
+
+                                <input type="checkbox" id="rememberMe">
+
+                                <span>Remember Me</span>
+
+                            </label>
+
+                            <!-- LOGIN BUTTON -->
+                            <button type="submit" class="auth-submit">
+                                Log In
+                            </button>
+
+                            <!-- CREATE ACCOUNT LINK -->
+                            <div class="auth-switch">
+
+                                <p>or</p>
+                                <p>Don't have an account?</p>
+
+                                <button type="button" id="showRegister">
+                                    Create an Account
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- CREATE ACCOUNT FORM -->
+                    <section class="auth-section" id="registerSection" hidden>
+
+                        <p class="form-description">
+                            Join Literature Land and start your reading journey.
+                        </p>
+
+                        <form id="registerForm">
+
+                            <!-- FULL NAME -->
+                            <div class="form-group">
+
+                                <label for="registerName">Full Name *</label>
+
+                                <input
+                                    type="text"
+                                    id="registerName"
+                                    name="fullName"
+                                    placeholder="Enter your full name"
+                                    autocomplete="name"
+                                    required
+                                >
+
+                            </div>
+
+                            <!-- EMAIL -->
+                            <div class="form-group">
+
+                                <label for="registerEmail">Email Address *</label>
+
+                                <input
+                                    type="email"
+                                    id="registerEmail"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    autocomplete="email"
+                                    required
+                                >
+
+                            </div>
+
+                            <!-- PASSWORD -->
+                            <div class="form-group">
+
+                                <label for="registerPassword">Password *</label>
+
+                                <div class="password-field">
+
+                                    <input
+                                        type="password"
+                                        id="registerPassword"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        autocomplete="new-password"
+                                        minlength="8"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="registerPassword"
+                                        aria-label="Show password"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- CONFIRM PASSWORD -->
+                            <div class="form-group">
+
+                                <label for="confirmPassword">Confirm Password *</label>
+
+                                <div class="password-field">
+
+                                    <input
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        placeholder="Confirm your password"
+                                        autocomplete="new-password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="confirmPassword"
+                                        aria-label="Show password"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- REGISTER BUTTON -->
+                            <button type="submit" class="auth-submit">
+                                Create Account
+                            </button>
+
+                            <!-- LOGIN LINK -->
+                            <div class="auth-switch">
+
+                                <p>Already have an account?</p>
+
+                                <button type="button" id="showLogin">
+                                    Log In
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- FORM MESSAGE -->
+                    <p id="authMessage" role="status" aria-live="polite"></p>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- AUTH JAVASCRIPT -->
+    <script src="login.js"></script>
+
+</body>
+
+</html>

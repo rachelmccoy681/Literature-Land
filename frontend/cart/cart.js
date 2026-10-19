@@ -458,10 +458,49 @@ function updateOrderSummary() {
 }
 
 
-// CHECKOUT PLACEHOLDER
+// CHECKOUT BUTTON
 
 document.getElementById("checkoutButton").addEventListener("click", () => {
-    alert("Checkout will be connected to the Order Service later.");
+
+    // GET SELECTED BOOKS
+    const selectedItems = cartItems.filter(item =>
+        selectedBookIds.has(Number(item.bookId))
+    );
+
+    // CHECK IF BOOKS ARE SELECTED
+    if (selectedItems.length === 0) {
+        alert("Please select at least one book to checkout.");
+        return;
+    }
+
+    // CHECK STOCK AVAILABILITY
+    const unavailable = selectedItems.some(item =>
+        !item.available ||
+        item.quantity > item.stockQuantity
+    );
+
+    if (unavailable) {
+        alert("Some selected books are unavailable or do not have enough stock.");
+        return;
+    }
+
+    // PREPARE CHECKOUT DETAILS
+    const checkoutItems = selectedItems.map(item => ({
+        bookId: item.bookId,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity
+    }));
+
+    // SAVE CHECKOUT DETAILS TEMPORARILY
+    sessionStorage.setItem(
+        "literatureLandCheckout",
+        JSON.stringify(checkoutItems)
+    );
+
+    // OPEN CHECKOUT PAGE
+    window.location.href = "../checkout/checkout.html";
+
 });
 
 

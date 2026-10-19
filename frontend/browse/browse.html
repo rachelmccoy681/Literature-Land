@@ -35,6 +35,7 @@
 
                 <!-- SORT BOOKS -->
                 <div class="sort-container">
+
                     <label for="sortBooks">Sort by:</label>
 
                     <select id="sortBooks">
@@ -44,6 +45,7 @@
                         <option value="rating">Highest Rated</option>
                         <option value="newest">Newest</option>
                     </select>
+
                 </div>
 
             </div>
@@ -63,20 +65,80 @@
 
                         <div class="genre-options">
 
-                            <label><input type="checkbox" value="Fiction"> Fiction</label>
-                            <label><input type="checkbox" value="Non Fiction"> Non Fiction</label>
-                            <label><input type="checkbox" value="Mystery"> Mystery</label>
-                            <label><input type="checkbox" value="Romance"> Romance</label>
-                            <label><input type="checkbox" value="Fantasy"> Fantasy</label>
-                            <label><input type="checkbox" value="Science Fiction"> Science Fiction</label>
-                            <label><input type="checkbox" value="Biography"> Biography</label>
-                            <label><input type="checkbox" value="History"> History</label>
-                            <label><input type="checkbox" value="Adventure"> Adventure</label>
-                            <label><input type="checkbox" value="Young Adult"> Young Adult</label>
-                            <label><input type="checkbox" value="Children"> Children</label>
-                            <label><input type="checkbox" value="Poetry"> Poetry</label>
-                            <label><input type="checkbox" value="Classics"> Classics</label>
-                            <label><input type="checkbox" value="Business"> Business</label>
+                            <label>
+                                <input type="checkbox" value="Fiction">
+                                Fiction
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Non Fiction">
+                                Non Fiction
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Mystery">
+                                Mystery
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Romance">
+                                Romance
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Fantasy">
+                                Fantasy
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Science Fiction">
+                                Science Fiction
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Biography">
+                                Biography
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="History">
+                                History
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Travel">
+                                Travel
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Children's Books">
+                                Children's Books
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Classics">
+                                Classics
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Poetry">
+                                Poetry
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Adventure">
+                                Adventure
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Young Adult">
+                                Young Adult
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Business">
+                                Business
+                            </label>
 
                         </div>
 
@@ -87,7 +149,11 @@
 
                         <h3>Author</h3>
 
-                        <input type="text" id="authorFilter" placeholder="Enter author name...">
+                        <input
+                            type="text"
+                            id="authorFilter"
+                            placeholder="Enter author name..."
+                        >
 
                     </div>
 
@@ -98,10 +164,16 @@
 
                         <div class="price-labels">
                             <span>$0</span>
-                            <span id="priceValue">$50+</span>
+                            <span id="priceValue">$100</span>
                         </div>
 
-                        <input type="range" id="priceFilter" min="0" max="100" value="100">
+                        <input
+                            type="range"
+                            id="priceFilter"
+                            min="0"
+                            max="100"
+                            value="100"
+                        >
 
                     </div>
 
@@ -164,25 +236,7 @@
                     <!-- PAGINATION -->
                     <div class="pagination">
 
-                        <button id="previousPage" type="button">
-                            &lsaquo;
-                        </button>
-
-                        <button class="page-number active" type="button">
-                            1
-                        </button>
-
-                        <button class="page-number" type="button">
-                            2
-                        </button>
-
-                        <button class="page-number" type="button">
-                            3
-                        </button>
-
-                        <button id="nextPage" type="button">
-                            &rsaquo;
-                        </button>
+                        <!-- PAGE BUTTONS ADDED BY JAVASCRIPT -->
 
                     </div>
 
@@ -204,7 +258,7 @@
 
     <!-- BROWSE BOOKS JAVASCRIPT -->
     <script src="browse.js"></script>
-    
+
 </body>
 
 </html>

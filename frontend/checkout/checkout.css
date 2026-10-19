@@ -1,0 +1,852 @@
+/* HIDE INACTIVE SECTIONS */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* CHECKOUT MAIN CONTENT */
+
+.checkout-main {
+    flex: 1;
+    min-width: 0;
+    padding: 30px;
+    background-color: #FAF7F2;
+}
+
+
+/* CHECKOUT PAGE TITLE */
+
+.checkout-main h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 30px;
+    color: #51382B;
+    margin-bottom: 30px;
+}
+
+
+/* CHECKOUT PROGRESS */
+
+.checkout-progress {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+
+.progress-step {
+    width: 150px;
+    text-align: center;
+    color: #8C7364;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    border: 1px solid #D8C7B7;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.progress-step span {
+    font-size: 13px;
+}
+
+.progress-step.active .step-number {
+    background-color: #51382B;
+    border-color: #51382B;
+    color: white;
+}
+
+.progress-step.active span {
+    color: #51382B;
+    font-weight: bold;
+}
+
+.progress-step.completed .step-number {
+    background-color: #E5D4C4;
+    border-color: #C69C63;
+    color: #51382B;
+}
+
+.progress-line {
+    flex: 1;
+    max-width: 180px;
+    height: 1px;
+    margin-top: 20px;
+    background-color: #D8C7B7;
+}
+
+
+/* CHECKOUT LAYOUT */
+
+.checkout-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+
+/* LEFT COLUMN */
+
+.checkout-left {
+    flex: 2;
+    min-width: 0;
+}
+
+
+/* RIGHT COLUMN */
+
+.checkout-summary {
+    flex: 1;
+    min-width: 280px;
+    background-color: white;
+    border: 1px solid #E8DDD1;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+
+/* CHECKOUT SECTIONS */
+
+.checkout-section {
+    background-color: white;
+    border: 1px solid #E8DDD1;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.checkout-section h2 {
+    font-size: 21px;
+    color: #51382B;
+    margin-bottom: 25px;
+}
+
+
+/* SHIPPING FORM */
+
+#shippingForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* FORM ROW */
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* FORM GROUP */
+
+.form-group {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 15px;
+}
+
+
+/* FORM LABELS */
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #51382B;
+    margin-bottom: 8px;
+}
+
+
+/* FORM INPUTS */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #D8C7B7;
+    border-radius: 6px;
+    background-color: white;
+    color: #2D2926;
+    font-size: 14px;
+}
+
+
+/* INPUT FOCUS */
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 1px solid #C69C63;
+    border-color: #C69C63;
+}
+
+
+/* INPUT PLACEHOLDERS */
+
+.form-group input::placeholder {
+    color: #9A8170;
+}
+
+
+/* DEFAULT ADDRESS CHECKBOX */
+
+.default-address {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #51382B;
+}
+
+.default-address input {
+    width: 16px;
+    height: 16px;
+    accent-color: #51382B;
+}
+
+
+/* SHIPPING OPTIONS */
+
+.shipping-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* SHIPPING OPTION */
+
+.shipping-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    border: 1px solid #E8DDD1;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.shipping-option:hover {
+    background-color: #FAF7F2;
+}
+
+.shipping-option.selected {
+    border-color: #51382B;
+    background-color: #FAF7F2;
+}
+
+
+/* SHIPPING RADIO BUTTON */
+
+.shipping-option input {
+    width: 16px;
+    height: 16px;
+    accent-color: #51382B;
+}
+
+
+/* SHIPPING DETAILS */
+
+.shipping-details {
+    flex: 1;
+}
+
+.shipping-details h3 {
+    font-size: 15px;
+    color: #51382B;
+    margin-bottom: 5px;
+}
+
+.shipping-details p {
+    font-size: 12px;
+    color: #8C7364;
+}
+
+
+/* SHIPPING PRICE */
+
+.shipping-price {
+    text-align: right;
+    color: #51382B;
+}
+
+.shipping-price strong {
+    display: block;
+    font-size: 14px;
+}
+
+.shipping-price span {
+    display: block;
+    font-size: 11px;
+    color: #8C7364;
+}
+
+
+/* PAYMENT SECTION */
+
+.payment-section {
+    min-height: 500px;
+}
+
+
+/* PAYMENT HEADING */
+
+.payment-heading {
+    margin-bottom: 25px;
+}
+
+.payment-heading h2 {
+    margin-bottom: 10px;
+}
+
+.payment-heading p {
+    font-size: 13px;
+    color: #8C7364;
+}
+
+
+/* PAYMENT FORM */
+
+#paymentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* PAYMENT CARD ROW */
+
+.payment-card-row {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* PAYMENT BUTTONS */
+
+.payment-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 50px;
+}
+
+
+/* BACK BUTTON */
+
+.back-button {
+    padding: 12px 20px;
+    background-color: white;
+    color: #51382B;
+    border: 1px solid #51382B;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #F1E9DF;
+}
+
+
+/* REVIEW BUTTON */
+
+.review-button {
+    padding: 12px 20px;
+    background-color: #51382B;
+    color: white;
+    border: 1px solid #51382B;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.review-button:hover {
+    background-color: #6B4C3B;
+}
+
+
+/* REVIEW SECTION */
+
+.review-description {
+    font-size: 13px;
+    color: #8C7364;
+    margin-bottom: 25px;
+}
+
+
+/* REVIEW BLOCKS */
+
+.review-block {
+    padding: 20px 0;
+    border-bottom: 1px solid #E8DDD1;
+}
+
+.review-block:last-of-type {
+    border-bottom: none;
+}
+
+
+/* REVIEW HEADINGS */
+
+.review-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.review-heading h3 {
+    font-size: 16px;
+    color: #51382B;
+}
+
+
+/* EDIT BUTTON */
+
+.edit-review-button {
+    background: none;
+    border: none;
+    color: #51382B;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.edit-review-button:hover {
+    color: #C69C63;
+}
+
+
+/* REVIEW BOOK LIST */
+
+#reviewItems {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+/* REVIEW BOOK */
+
+.review-book {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+
+/* REVIEW BOOK COVER */
+
+.review-book-cover {
+    width: 75px;
+    height: 95px;
+    flex-shrink: 0;
+    background-color: #E9DCD0;
+    border: 1px solid #D8C7B7;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #8C7364;
+}
+
+
+/* REVIEW BOOK INFORMATION */
+
+.review-book-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.review-book-info h4 {
+    font-size: 14px;
+    color: #51382B;
+    margin-bottom: 6px;
+}
+
+.review-book-info p {
+    font-size: 12px;
+    color: #8C7364;
+    margin-bottom: 5px;
+}
+
+
+/* REVIEW BOOK PRICE */
+
+.review-book-price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #51382B;
+}
+
+
+/* REVIEW ADDRESS */
+
+.review-address p {
+    font-size: 13px;
+    color: #7A6254;
+    margin-bottom: 6px;
+}
+
+#reviewFullName {
+    font-weight: bold;
+    color: #51382B;
+}
+
+
+/* REVIEW PAYMENT */
+
+.review-payment p {
+    font-size: 13px;
+    color: #7A6254;
+    margin-bottom: 6px;
+}
+
+#reviewCardDetails {
+    font-weight: bold;
+    color: #51382B;
+}
+
+.demo-payment-note {
+    font-size: 12px;
+    color: #8C7364;
+}
+
+
+/* REVIEW ACTIONS */
+
+.review-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+}
+
+
+/* ORDER SUMMARY HEADER */
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.summary-header h2 {
+    font-size: 21px;
+    color: #51382B;
+}
+
+
+/* EDIT CART LINK */
+
+.edit-cart {
+    font-size: 13px;
+    color: #51382B;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.edit-cart:hover {
+    color: #C69C63;
+}
+
+
+/* CHECKOUT ITEMS */
+
+#checkoutItems {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+
+/* ORDER SUMMARY BOOK */
+
+.checkout-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E8DDD1;
+}
+
+
+/* ORDER SUMMARY BOOK COVER */
+
+.checkout-item-cover {
+    width: 55px;
+    height: 75px;
+    flex-shrink: 0;
+    background-color: #E9DCD0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #8C7364;
+    text-align: center;
+}
+
+
+/* ORDER SUMMARY BOOK DETAILS */
+
+.checkout-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.checkout-item-info h3 {
+    font-size: 13px;
+    color: #51382B;
+    margin-bottom: 5px;
+}
+
+.checkout-item-info p {
+    font-size: 12px;
+    color: #8C7364;
+}
+
+
+/* ORDER SUMMARY BOOK PRICE */
+
+.checkout-item-price {
+    font-size: 13px;
+    font-weight: bold;
+    color: #51382B;
+    white-space: nowrap;
+}
+
+
+/* SUMMARY PRICES */
+
+.summary-prices {
+    padding-top: 10px;
+    border-top: 1px solid #E8DDD1;
+}
+
+
+/* SUMMARY ROW */
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #51382B;
+}
+
+
+/* SHIPPING NOTE */
+
+.shipping-note {
+    font-size: 12px;
+    color: #8C7364;
+    margin-bottom: 20px;
+}
+
+
+/* CHECKOUT TOTAL */
+
+.checkout-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 20px 0;
+    border-top: 1px solid #E8DDD1;
+    font-size: 18px;
+    color: #51382B;
+}
+
+
+/* CONTINUE BUTTON */
+
+.continue-button {
+    width: 100%;
+    padding: 14px 20px;
+    background-color: #51382B;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.continue-button:hover {
+    background-color: #6B4C3B;
+}
+
+.continue-button:disabled {
+    background-color: #C9BEB4;
+    cursor: not-allowed;
+}
+
+
+/* PLACE ORDER SECTION */
+
+#placeOrderSection {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+
+/* ORDER TERMS */
+
+.order-terms {
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+    color: #8C7364;
+}
+
+
+/* CHECKOUT BENEFITS */
+
+.checkout-benefits {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #E8DDD1;
+}
+
+.checkout-benefits p {
+    font-size: 12px;
+    color: #7A6254;
+    margin-bottom: 12px;
+}
+
+
+/* SMALLER SCREENS */
+
+@media (max-width: 1100px) {
+
+    .checkout-main {
+        padding: 20px;
+    }
+
+    .checkout-content {
+        gap: 15px;
+    }
+
+    .checkout-summary {
+        min-width: 250px;
+        padding: 20px;
+    }
+
+    .checkout-section {
+        padding: 20px;
+    }
+
+    .form-row {
+        gap: 12px;
+    }
+}
+
+
+/* MOBILE LAYOUT */
+
+@media (max-width: 800px) {
+
+    .checkout-content {
+        flex-direction: column;
+    }
+
+    .checkout-left,
+    .checkout-summary {
+        width: 100%;
+    }
+
+    .form-row,
+    .payment-card-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .checkout-progress {
+        gap: 5px;
+    }
+
+    .progress-step {
+        width: 100px;
+    }
+
+    .progress-step span {
+        font-size: 11px;
+    }
+
+    .payment-actions {
+        flex-direction: column;
+    }
+
+    .back-button,
+    .review-button {
+        width: 100%;
+    }
+    /* CHECKOUT BOOKS */
+
+.checkout-book {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E8DDD1;
+}
+
+.checkout-book-cover {
+    width: 55px;
+    height: 75px;
+    flex-shrink: 0;
+    background-color: #E9DCD0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #8C7364;
+    text-align: center;
+}
+
+.checkout-book-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.checkout-book-info h3 {
+    font-size: 13px;
+    color: #51382B;
+    margin-bottom: 5px;
+}
+
+.checkout-book-info p {
+    font-size: 12px;
+    color: #8C7364;
+    margin-bottom: 5px;
+}
+
+.checkout-book-price {
+    font-size: 13px;
+    font-weight: bold;
+    color: #51382B;
+    white-space: nowrap;
+}
+
+}

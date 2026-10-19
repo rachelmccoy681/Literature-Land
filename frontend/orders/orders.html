@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | Literature Land</title>
+
+    <!-- GLOBAL CSS -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- ORDERS CSS -->
+    <link rel="stylesheet" href="orders.css">
+</head>
+
+<body>
+
+    <!-- SHARED HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE LAYOUT -->
+    <div class="page-container">
+
+        <!-- SHARED SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="orders-main">
+
+            <!-- PAGE HEADING -->
+            <div class="orders-top">
+
+                <div>
+                    <h1>My Orders</h1>
+                    <p>View and track your past orders.</p>
+                </div>
+
+                <!-- ORDER FILTER -->
+                <div class="orders-filter">
+
+                    <label for="orderFilter">Filter:</label>
+
+                    <select id="orderFilter">
+                        <option value="all">All Orders</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="PROCESSING">Processing</option>
+                        <option value="DELIVERED">Delivered</option>
+                        <option value="CANCELLED">Cancelled</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <!-- ORDERS LIST -->
+            <div id="ordersList">
+
+                <!-- ORDERS WILL APPEAR HERE -->
+                <p>Loading your orders...</p>
+
+            </div>
+
+            <!-- EMPTY MESSAGE -->
+            <div id="emptyOrders" hidden>
+
+                <h2>No orders found</h2>
+
+                <p>
+                    You haven't placed any orders in this category yet.
+                </p>
+
+                <a href="../browse/browse.html" class="browse-button">
+                    Browse Books
+                </a>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- ORDERS JAVASCRIPT -->
+    <script src="orders.js"></script>
+
+</body>
+
+</html>

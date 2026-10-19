@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Help Chatbot | Literature Land</title>
+
+    <!-- SHARED STYLES -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- CHATBOT STYLES -->
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+    <!-- SHARED HEADER -->
+    <div id="header-container"></div>
+
+    <div class="page-container">
+
+        <!-- SHARED SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- CHATBOT CONTENT -->
+        <main class="chatbot-main">
+
+            <!-- PAGE HEADING -->
+            <div class="chatbot-heading">
+                <h1>AI Help Chatbot</h1>
+                <p>
+                    Ask anything about books, get recommendations,
+                    or find help using our website.
+                </p>
+            </div>
+
+            <!-- CHATBOT LAYOUT -->
+            <div class="chatbot-layout">
+
+                <!-- CHAT WINDOW -->
+                <section class="chatbot-chat">
+
+                    <!-- CHAT MESSAGES -->
+                    <div
+                        class="chatbot-messages"
+                        id="chatbotMessages"
+                        role="log"
+                        aria-label="Chat messages"
+                        aria-live="polite">
+
+                        <!-- MESSAGES ADDED BY JAVASCRIPT -->
+
+                    </div>
+
+                    <!-- MESSAGE INPUT -->
+                    <form id="chatbotForm" class="chatbot-input-area">
+
+                        <input
+                            type="text"
+                            id="chatbotInput"
+                            placeholder="Type your message here..."
+                            aria-label="Type your message"
+                            maxlength="500"
+                            autocomplete="off"
+                            required>
+
+                        <button
+                            type="submit"
+                            id="chatbotSendButton"
+                            aria-label="Send message">
+
+                            <i data-lucide="send"></i>
+
+                        </button>
+
+                    </form>
+
+                </section>
+
+                <!-- RIGHT PANELS -->
+                <aside class="chatbot-right">
+
+                    <!-- SUGGESTED QUESTIONS -->
+                    <section class="chatbot-panel">
+
+                        <h2>Suggested Questions</h2>
+
+                        <div class="chatbot-suggestions">
+
+                            <button type="button" class="chatbot-suggestion">
+                                Recommend books similar to The Hobbit
+                            </button>
+
+                            <button type="button" class="chatbot-suggestion">
+                                What are the latest releases?
+                            </button>
+
+                            <button type="button" class="chatbot-suggestion">
+                                Best books for beginners?
+                            </button>
+
+                            <button type="button" class="chatbot-suggestion">
+                                Can you suggest non-fiction books?
+                            </button>
+
+                            <button type="button" class="chatbot-suggestion">
+                                How do I track my order?
+                            </button>
+
+                            <button type="button" class="chatbot-suggestion">
+                                How do I use my wishlist?
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                    <!-- QUICK LINKS -->
+                    <section class="chatbot-panel">
+
+                        <h2>Quick Links</h2>
+
+                        <div class="chatbot-quick-links">
+
+                            <a href="../categories/categories.html">
+                                <i data-lucide="layout-grid"></i>
+                                <span>Browse Categories</span>
+                            </a>
+
+                            <a href="../orders/orders.html">
+                                <i data-lucide="truck"></i>
+                                <span>Track My Order</span>
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                    <!-- ASSISTANT NOTICE -->
+                    <section class="chatbot-panel chatbot-notice">
+
+                        <i data-lucide="sparkles"></i>
+
+                        <p>
+                            Our AI assistant is designed to help with
+                            book recommendations, website navigation,
+                            and general questions. For account or
+                            payment issues, please contact our
+                            support team.
+                        </p>
+
+                    </section>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- SVG ICONS -->
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- CHATBOT JAVASCRIPT -->
+    <script src="chatbot.js"></script>
+
+</body>
+</html>
