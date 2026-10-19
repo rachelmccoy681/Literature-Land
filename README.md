@@ -153,3 +153,51 @@ order in that case. If an order was recorded but the cart could not be cleared,
 the checkout response reports its ID so the customer does not retry and create
 a duplicate. Payment service URLs can be configured with `CART_SERVICE_URL`
 and `ORDER_SERVICE_URL` environment variables.
+
+## Chatbot service
+
+The chatbot answers customer questions about books and about using the store.
+It uses LangChain4j with Anthropic's Claude Haiku 5.5 model. It reads from the
+stock, cart, and order services, but it never changes anything: it can't add
+to a cart, place an order, or edit an account. When a customer asks for one of
+those, it explains how to do it.
+
+It needs an Anthropic API key in the `ANTHROPIC_API_KEY` environment variable.
+Don't put the key in `application.properties` or commit it. The service stops
+at startup with a clear message if the key is missing.
+
+Start the services the chatbot reads from (stock, cart, and order, plus Kafka
+for trending books), then start the chatbot from `services/chatbot-service`:
+
+```sh
+export ANTHROPIC_API_KEY=...        # PowerShell: $env:ANTHROPIC_API_KEY = "..."
+./mvnw spring-boot:run
+```
+
+It runs on port `8085`. Send a message as customer `25`:
+
+```sh
+curl -i -X POST http://localhost:8085/api/chat/25 \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"Do you have any fantasy books under $25?"}'
+```
+
+The response is `{"customerId": 25, "reply": "..."}`. The chatbot remembers
+each customer's last 20 messages, saved in its own H2 database, so follow-up
+questions work. To start a fresh conversation:
+
+```sh
+curl -i -X DELETE http://localhost:8085/api/chat/25
+```
+
+It can search and filter books, show a book's details and stock, list trending
+books, and show the customer's own cart, wishlist, and order history. Chatbot
+searches count toward trending books, like any other search. An empty message,
+a message over 2000 characters, or a non-positive customer ID returns
+`400 Bad Request`. If Claude can't be reached, the response is
+`503 Service Unavailable`.
+
+The model, effort level, memory size, and service URLs are set under
+`chatbot.*` in `application.properties`. `./mvnw test` doesn't need an API
+key: the tests run against a local fake of the Anthropic API and the other
+services.

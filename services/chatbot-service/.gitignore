@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### h2 conversation database ###
+/chat-history.mv.db
+/chat-history.lock.db
+/chat-history.trace.db
