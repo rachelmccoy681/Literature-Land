@@ -149,6 +149,24 @@ function displayBooks() {
             </p>
         `;
 
+        // OPEN BOOK DETAILS WHEN BOOK CARD IS CLICKED
+
+        bookCard.style.cursor = "pointer";
+
+        bookCard.addEventListener("click", function (event) {
+
+            // DO NOT OPEN BOOK DETAILS WHEN WISHLIST BUTTON IS CLICKED
+
+            if (event.target.closest(".wishlist-button")) {
+                return;
+            }
+
+            // OPEN SELECTED BOOK USING ITS BACKEND ID
+
+            window.location.href =
+                `../book-details/book-details.html?id=${encodeURIComponent(book.id)}`;
+        });
+
         booksGrid.appendChild(bookCard);
     });
 

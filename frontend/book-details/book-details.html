@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Details | Literature Land</title>
+
+    <!-- SHARED HEADER AND SIDEBAR STYLES -->
+    <link rel="stylesheet" href="../browse/browse.css">
+
+    <!-- BOOK DETAILS STYLES -->
+    <link rel="stylesheet" href="book-details.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE CONTAINER -->
+    <div class="page-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- BREADCRUMB -->
+            <nav class="breadcrumb">
+                <a href="../home/home.html">Home</a>
+                <span>›</span>
+                <a href="../browse/browse.html">Books</a>
+                <span>›</span>
+                <span id="breadcrumbGenre">Genre</span>
+                <span>›</span>
+                <span id="breadcrumbTitle">Book Title</span>
+            </nav>
+
+            <!-- BOOK DETAILS SECTION -->
+            <section class="book-details-section">
+
+                <!-- BOOK COVER -->
+                <div class="book-images">
+
+                    <div class="main-book-cover" id="bookCover">
+                        Book Cover
+                    </div>
+
+                </div>
+
+                <!-- BOOK INFORMATION -->
+                <div class="book-information">
+
+                    <h1 id="bookTitle">Book Title</h1>
+
+                    <p class="book-author" id="bookAuthor">
+                        Author Name
+                    </p>
+
+                    <!-- BOOK RATING -->
+                    <div class="book-rating">
+                        <span class="rating-stars" id="bookStars">☆☆☆☆☆</span>
+                        <span class="rating-number" id="bookRating">0.0</span>
+                    </div>
+
+                    <!-- BOOK PRICE -->
+                    <p class="book-price" id="bookPrice">$0.00</p>
+
+                    <hr class="details-divider">
+
+                    <!-- ADDITIONAL BOOK INFORMATION -->
+                    <div class="book-metadata">
+
+                        <p>
+                            <strong>Genre:</strong>
+                            <span id="bookGenre">-</span>
+                        </p>
+
+                        <p>
+                            <strong>Availability:</strong>
+                            <span id="bookAvailability">-</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- PURCHASE PANEL -->
+                <div class="purchase-panel">
+
+                    <!-- STOCK STATUS -->
+                    <div class="stock-status">
+                        <h3>Availability</h3>
+                        <p id="stockStatus">Checking stock...</p>
+                        <span id="stockQuantity"></span>
+
+                        <!-- SHIPPING INFORMATION -->
+                        <p class="shipping-message">
+                            Usually ships within 1–2 business days
+                        </p>
+                    </div>
+
+                    <!-- QUANTITY SELECTOR -->
+                    <div class="quantity-section">
+
+                        <label for="quantityInput">Quantity</label>
+
+                        <div class="quantity-controls">
+
+                            <button type="button" id="decreaseQuantity">
+                                −
+                            </button>
+
+                            <input type="number" id="quantityInput" value="1" min="1" readonly>
+
+                            <button type="button" id="increaseQuantity">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ADD TO CART -->
+                    <button class="add-cart-button" id="addToCart" type="button">
+                        <img src="../assets/icons/shopping-cart.svg" alt="">
+                        Add to Cart
+                    </button>
+
+                    <!-- ADD TO WISHLIST -->
+                    <button class="add-wishlist-button" id="addToWishlist" type="button">
+                        <img src="../assets/icons/heart.svg" alt="">
+                        Add to Wishlist
+                    </button>
+
+                    <!-- DELIVERY AND PAYMENT INFORMATION -->
+                    <div class="purchase-benefits">
+
+                        <div class="benefit-item">
+                            <img src="../assets/icons/truck.svg" alt="">
+                            <span>Free delivery on orders over $50</span>
+                        </div>
+
+                        <div class="benefit-item">
+                            <img src="../assets/icons/refresh-cw.svg" alt="">
+                            <span>30-day returns</span>
+                        </div>
+
+                        <div class="benefit-item">
+                            <img src="../assets/icons/shield-check.svg" alt="">
+                            <span>Secure payment</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- BOOK INFORMATION TABS -->
+            <section class="book-tabs-section">
+
+                <!-- TAB BUTTONS -->
+                <div class="tabs">
+
+                    <button class="tab-button active" data-tab="description" type="button">
+                        Description
+                    </button>
+
+                    <button class="tab-button" data-tab="details" type="button">
+                        Details
+                    </button>
+
+                    <button class="tab-button" data-tab="author" type="button">
+                        About the Author
+                    </button>
+
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="tab-content active" id="description">
+
+                    <h3>Book Description</h3>
+
+                    <p id="bookDescription">
+                        Book description will appear here.
+                    </p>
+
+                </div>
+
+                <!-- DETAILS -->
+                <div class="tab-content" id="details">
+
+                    <h3>Book Details</h3>
+
+                    <p>
+                        <strong>Title:</strong>
+                        <span id="detailTitle">-</span>
+                    </p>
+
+                    <p>
+                        <strong>Author:</strong>
+                        <span id="detailAuthor">-</span>
+                    </p>
+
+                    <p>
+                        <strong>Genre:</strong>
+                        <span id="detailGenre">-</span>
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        <span id="detailPrice">-</span>
+                    </p>
+
+                </div>
+
+                <!-- ABOUT THE AUTHOR -->
+                <div class="tab-content" id="author">
+
+                    <h3>About the Author</h3>
+
+                    <p id="authorDescription">
+                        Author information is not available yet.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- RECOMMENDED BOOKS -->
+            <section class="recommended-section">
+
+                <div class="section-heading">
+
+                    <h2>You Might Also Like</h2>
+
+                    <a href="../browse/browse.html" class="see-more">
+                        See More →
+                    </a>
+
+                </div>
+
+                <!-- RECOMMENDED BOOKS FROM BACKEND -->
+                <div class="recommended-books" id="recommendedBooks"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+    
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- BOOK DETAILS JAVASCRIPT -->
+    <script src="book-details.js"></script>
+
+</body>
+
+</html>
