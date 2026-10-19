@@ -5,6 +5,49 @@ To run the program, navigate to the service directory and type:
 `./mvnw spring-boot:run`,
 then use a second terminal to send requests as provided below.
 
+## Running Kafka locally
+
+The stock service publishes stock updates and book search/view activity to
+Kafka, and the order service consumes them. Both expect a broker at
+`localhost:9092`. Start one with Docker from the repository root:
+
+```sh
+docker compose up -d
+```
+
+Then start both services in separate terminals:
+
+```sh
+cd services/stock-service && ./mvnw spring-boot:run
+cd services/order-service && ./mvnw spring-boot:run
+```
+
+The stock service runs on port `8081` and the order service on `8083`. To
+check that messages are flowing, reduce stock for a book and read the copy the
+order service received through Kafka:
+
+```sh
+curl -i -X POST 'http://localhost:8081/books/1/reduce-stock?quantity=2'
+
+curl -i http://localhost:8083/stock-availability/1
+```
+
+View a book, then check the trending list:
+
+```sh
+curl -i http://localhost:8081/books/2
+
+curl -i http://localhost:8083/trending-books
+```
+
+The order service terminal also prints `stock updated:` and `book activity:`
+lines as it receives events. Stop the broker with `docker compose down`.
+
+`./mvnw test` does not need Docker: the Kafka integration tests
+(`StockKafkaIntegrationTests` and `OrderKafkaIntegrationTests`) start an
+embedded broker. Without a running broker, the other tests still pass but log
+connection retries for `localhost:9092`.
+
 ## Cart and wishlist service API
 
 The service runs on port `8082`. Send requests to the API paths below
