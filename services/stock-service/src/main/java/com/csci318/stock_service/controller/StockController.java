@@ -3,6 +3,7 @@ package com.csci318.stock_service.controller;
 import com.csci318.stock_service.domain.Book;
 import com.csci318.stock_service.service.StockService;
 import com.csci318.stock_service.request.StockRequest;
+import com.csci318.stock_service.messaging.BookActivityPublisher;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +20,14 @@ import java.util.List;
 public class StockController {
 
     private final StockService stockService;
+    private final BookActivityPublisher bookActivityPublisher;
 
-    // connects controller to stock service
-    public StockController(StockService stockService) {
+    // connects controller to stock service and kafka publisher
+    public StockController(
+            StockService stockService,
+            BookActivityPublisher bookActivityPublisher) {
         this.stockService = stockService;
+        this.bookActivityPublisher = bookActivityPublisher;
     }
 
     // allows customers to view all books
@@ -31,10 +36,19 @@ public class StockController {
         return stockService.getAllBooks();
     }
 
-    // allows customers to search books by keyword
+    // searches books and publishes search activity to kafka
     @GetMapping("/search")
     public List<Book> searchBooks(@RequestParam String keyword) {
-        return stockService.searchBooks(keyword);
+
+        List<Book> books = stockService.searchBooks(keyword);
+
+        for (Book book : books) {
+            bookActivityPublisher.publishBookActivity(
+                    book.getId(),
+                    "SEARCH");
+        }
+
+        return books;
     }
 
     // allows customers to filter books
@@ -51,10 +65,17 @@ public class StockController {
                 genre, author, minPrice, maxPrice, available, minRating);
     }
 
-    // allows customers to view a book using its ID
+    // retrieves book details and publishes view activity to kafka
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable Long id) {
-        return stockService.getBookById(id);
+
+        Book book = stockService.getBookById(id);
+
+        bookActivityPublisher.publishBookActivity(
+                book.getId(),
+                "VIEW");
+
+        return book;
     }
 
     // reduces stock when books are purchased
@@ -70,5 +91,11 @@ public class StockController {
     @PostMapping("/reduce-stock")
     public void reduceStockForOrder(@RequestBody List<StockRequest> items) {
         stockService.reduceStockForOrder(items);
+    }
+
+    // get book details without recording a view event
+    @GetMapping("/{id}/details")
+    public Book getBookDetails(@PathVariable Long id) {
+        return stockService.getBookById(id);
     }
 }
