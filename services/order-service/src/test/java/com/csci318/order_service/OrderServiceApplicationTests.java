@@ -1,14 +1,20 @@
 package com.csci318.order_service;
 
+import com.csci318.order_service.client.StockClient;
 import com.csci318.order_service.repository.OrderRepository;
+import com.csci318.order_service.repository.OrderItemRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -16,74 +22,136 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest(properties = {
-		"spring.datasource.url=jdbc:h2:mem:order-history-test;DB_CLOSE_DELAY=-1",
-		"spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.datasource.url=jdbc:h2:mem:order-history-test;DB_CLOSE_DELAY=-1",
+        "spring.jpa.hibernate.ddl-auto=create-drop"
 })
 class OrderServiceApplicationTests {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Autowired
-	private OrderRepository orderRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
-	@BeforeEach
-	void clearOrders() {
-		orderRepository.deleteAll();
-	}
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
-	@Test
-	void contextLoads() {
-	}
+    // simulates the stock service during testing
+    @MockitoBean
+    private StockClient stockClient;
 
-	@Test
-	void createsOrdersAndReturnsCustomerHistoryNewestFirst() throws Exception {
-		String orderBody = """
-				{"customerId":25,"items":[{"bookId":3,"quantity":2},{"bookId":1,"quantity":1}]}
-				""";
-		mockMvc.perform(post("/api/orders")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(orderBody))
-				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.orderId").isNumber())
-				.andExpect(jsonPath("$.customerId").value(25))
-				.andExpect(jsonPath("$.createdAt").isNotEmpty())
-				.andExpect(jsonPath("$.totalQuantity").value(3))
-				.andExpect(jsonPath("$.items[0].bookId").value(1))
-				.andExpect(jsonPath("$.items[0].quantity").value(1))
-				.andExpect(jsonPath("$.items[1].bookId").value(3));
+    @BeforeEach
+    void clearOrders() {
+        orderItemRepository.deleteAll();
+        orderRepository.deleteAll();
+    }
 
-		mockMvc.perform(post("/api/orders")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("{\"customerId\":25,\"items\":[{\"bookId\":9,\"quantity\":1}]}"))
-				.andExpect(status().isCreated());
+    @Test
+    void contextLoads() {
+    }
 
-		mockMvc.perform(get("/api/orders/25"))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.length()").value(2))
-				.andExpect(jsonPath("$[0].customerId").value(25))
-				.andExpect(jsonPath("$[0].items[0].bookId").value(9))
-				.andExpect(jsonPath("$[1].items.length()").value(2))
-				.andExpect(jsonPath("$[1].items[0].bookId").value(1));
+    @Test
+    void createsOrderSuccessfully() throws Exception {
 
-		mockMvc.perform(get("/api/orders/26"))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.length()").value(0));
-	}
+        // simulate successful stock reduction
+        doNothing().when(stockClient).reduceStockForOrder(anyList());
 
-	@Test
-	void rejectsOrdersWithoutValidItems() throws Exception {
-		mockMvc.perform(post("/api/orders")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("{\"customerId\":25,\"items\":[]}"))
-				.andExpect(status().isBadRequest());
+        String orderBody = """
+                [
+                    {
+                        "bookId": 3,
+                        "quantity": 2
+                    },
+                    {
+                        "bookId": 1,
+                        "quantity": 1
+                    }
+                ]
+                """;
 
-		mockMvc.perform(post("/api/orders")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("{\"customerId\":25,\"items\":[{\"bookId\":1,\"quantity\":0}]}"))
-				.andExpect(status().isBadRequest());
+        mockMvc.perform(post("/orders")
+                        .param("customerId", "25")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(orderBody))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.customerId").value(25))
+                .andExpect(jsonPath("$.status").value("PENDING"));
+    }
 
-		mockMvc.perform(get("/api/orders/0"))
-				.andExpect(status().isBadRequest());
-	}
+    @Test
+    void returnsCustomerOrderHistory() throws Exception {
+
+        doNothing().when(stockClient).reduceStockForOrder(anyList());
+
+        String orderBody = """
+                [
+                    {
+                        "bookId": 1,
+                        "quantity": 2
+                    }
+                ]
+                """;
+
+        // create an order
+        mockMvc.perform(post("/orders")
+                        .param("customerId", "25")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(orderBody))
+                .andExpect(status().isOk());
+
+        // check customer order history
+        mockMvc.perform(get("/orders/customer/25"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].customerId").value(25))
+                .andExpect(jsonPath("$[0].status").value("PENDING"));
+    }
+
+    @Test
+    void rejectsOrdersWithoutValidItems() throws Exception {
+
+        // empty order
+        mockMvc.perform(post("/orders")
+                        .param("customerId", "25")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("[]"))
+                .andExpect(status().isBadRequest());
+
+        // invalid quantity
+        mockMvc.perform(post("/orders")
+                        .param("customerId", "25")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                [
+                                    {
+                                        "bookId": 1,
+                                        "quantity": 0
+                                    }
+                                ]
+                                """))
+                .andExpect(status().isBadRequest());
+
+        // invalid customer ID
+        mockMvc.perform(post("/orders")
+                        .param("customerId", "0")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                [
+                                    {
+                                        "bookId": 1,
+                                        "quantity": 1
+                                    }
+                                ]
+                                """))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void returnsEmptyHistoryForNewCustomer() throws Exception {
+
+        mockMvc.perform(get("/orders/customer/999"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
 }
