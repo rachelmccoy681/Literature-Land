@@ -1,0 +1,43 @@
+<!-- HEADER -->
+<header class="header">
+
+    <!-- LOGO -->
+    <div class="header-logo">
+        <a href="../home/home.html">Literature Land</a>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <form class="header-search" id="searchForm">
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Search books, authors, genres..."
+            aria-label="Search books"
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- HEADER ACTIONS -->
+    <nav class="header-actions" aria-label="Account navigation">
+
+        <!-- LOGIN -->
+<a href="../auth/login.html" class="header-action">
+    <img src="../assets/icons/user-round.svg" alt="">
+    <span>Login</span>
+</a>
+
+        <!-- WISHLIST -->
+        <a href="../wishlist/wishlist.html" class="header-action">
+            <img src="../assets/icons/heart.svg" alt="">
+            <span>Wishlist</span>
+        </a>
+
+        <!-- CART -->
+        <a href="../cart/cart.html" class="header-action">
+            <img src="../assets/icons/shopping-cart.svg" alt="">
+            <span>Cart (<span id="cart-count">0</span>)</span>
+        </a>
+
+    </nav>
+
+</header>
