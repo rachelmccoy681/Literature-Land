@@ -87,6 +87,11 @@ if (-not $SkipKafka) {
 # the service windows inherit this, and the stock service then skips sending events
 $env:KAFKA_ENABLED = if ($SkipKafka) { "false" } else { "true" }
 
+# each service runs maven plus its own java process, so cap their memory to fit on 4 GB machines
+if (-not $env:JAVA_TOOL_OPTIONS) {
+    $env:JAVA_TOOL_OPTIONS = "-Xmx256m -XX:+UseSerialGC"
+}
+
 # 2. backend services, each in its own window so its logs stay visible
 Write-Host "Starting services: $($Services -join ', ')" -ForegroundColor Cyan
 foreach ($service in $Services) {

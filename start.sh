@@ -97,6 +97,9 @@ else
     export KAFKA_ENABLED=true
 fi
 
+# each service runs maven plus its own java process, so cap their memory to fit on 4 GB machines
+export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:--Xmx256m -XX:+UseSerialGC}"
+
 # 2. backend services
 echo "Starting services: $services"
 for service in $services; do

@@ -29,6 +29,23 @@ Options, when running from a terminal:
 .\stop.cmd -KeepKafka                           # stop the services, leave Kafka running
 ```
 
+### If a service crashes with "insufficient memory"
+
+A service that stops straight away and leaves an `hs_err_pid*.log` file
+saying *There is insufficient memory for the Java Runtime Environment to
+continue* means the computer ran out of RAM; the code is fine. The script
+already limits each Java process to 256 MB, so free up memory and run it
+again:
+
+- Close programs you don't need (browsers, Discord and so on).
+- Skip Docker with `.\start.cmd -SkipKafka`. Docker Desktop alone can use
+  about 2 GB.
+- In VS Code, close the Java project, or disable the "Language Support for
+  Java" extension while running the app.
+
+Delete the `hs_err_pid*.log` and `replay_pid*.log` files afterwards. They're
+only crash reports.
+
 ### Running without Docker
 
 If Docker Desktop isn't installed or isn't running, the script prints a
