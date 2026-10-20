@@ -65,7 +65,7 @@ public class ChatbotConfig {
                         .maxMessages(maxMessages)
                         .chatMemoryStore(chatMemoryStore)
                         .build())
-                .maxSequentialToolsInvocations(10)
+                .maxToolCallingRoundTrips(10)
                 .build();
     }
 }
