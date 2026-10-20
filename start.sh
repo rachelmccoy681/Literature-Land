@@ -79,17 +79,22 @@ mkdir -p "$log_dir"
 # job control gives each background job its own process group, so stop.sh can stop java too
 set -m
 
-# 1. kafka
+# 1. kafka (optional: without it trending books and the order service's stock copy stop updating)
 if [ "$skip_kafka" = false ]; then
     echo "Starting Kafka..."
     if ! command -v docker > /dev/null; then
-        echo "docker was not found - install Docker, or run with --skip-kafka" >&2
-        exit 1
+        echo "WARNING: docker was not found - continuing without Kafka" >&2
+        skip_kafka=true
+    elif ! docker compose -f "$root/docker-compose.yml" up -d --wait; then
+        echo "WARNING: Kafka failed to start (is Docker running?) - continuing without it" >&2
+        skip_kafka=true
     fi
-    if ! docker compose -f "$root/docker-compose.yml" up -d --wait; then
-        echo "kafka failed to start - is Docker running?" >&2
-        exit 1
-    fi
+fi
+# the services inherit this, and the stock service then skips sending events
+if [ "$skip_kafka" = true ]; then
+    export KAFKA_ENABLED=false
+else
+    export KAFKA_ENABLED=true
 fi
 
 # 2. backend services

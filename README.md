@@ -30,6 +30,11 @@ writes their logs to `.run/logs/`:
 If you get `permission denied`, run `chmod +x start.sh stop.sh` once, or use
 `bash start.sh`.
 
+Docker is optional. Without it (or with `-SkipKafka`), the script starts the
+services with `KAFKA_ENABLED=false`: the whole bookstore works, but the
+order service's trending books and stock copy stop updating. To run the stock
+service by hand without a broker, set `KAFKA_ENABLED=false` first.
+
 Serving the frontend needs Python or Node.js. If VS Code Live Server is
 already running on port `5500`, the script uses it instead.
 

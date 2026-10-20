@@ -70,17 +70,22 @@ foreach ($service in $Services) {
 
 New-Item -ItemType Directory -Force $runDir | Out-Null
 
-# 1. kafka
+# 1. kafka (optional: without it trending books and the order service's stock copy stop updating)
 if (-not $SkipKafka) {
     Write-Host "Starting Kafka..." -ForegroundColor Cyan
     if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
-        throw "docker was not found - install Docker Desktop, or run with -SkipKafka"
-    }
-    docker compose -f (Join-Path $root "docker-compose.yml") up -d --wait
-    if ($LASTEXITCODE -ne 0) {
-        throw "kafka failed to start - is Docker Desktop running?"
+        Write-Warning "docker was not found - continuing without Kafka"
+        $SkipKafka = $true
+    } else {
+        docker compose -f (Join-Path $root "docker-compose.yml") up -d --wait
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "Kafka failed to start (is Docker Desktop running?) - continuing without it"
+            $SkipKafka = $true
+        }
     }
 }
+# the service windows inherit this, and the stock service then skips sending events
+$env:KAFKA_ENABLED = if ($SkipKafka) { "false" } else { "true" }
 
 # 2. backend services, each in its own window so its logs stay visible
 Write-Host "Starting services: $($Services -join ', ')" -ForegroundColor Cyan
