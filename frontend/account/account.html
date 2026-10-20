@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account | Literature Land</title>
+
+    <!-- SHARED STYLES -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- ACCOUNT STYLES -->
+    <link rel="stylesheet" href="account.css">
+</head>
+
+<body>
+
+    <!-- SHARED HEADER -->
+    <div id="header-container"></div>
+
+    <div class="page-container">
+
+        <!-- SHARED SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- ACCOUNT CONTENT -->
+        <main class="account-main">
+
+            <!-- PAGE HEADING -->
+            <div class="account-heading">
+                <h1>My Account</h1>
+                <p>View and manage your account information and preferences.</p>
+            </div>
+
+            <!-- ACCOUNT SECTIONS -->
+            <div class="account-grid">
+
+                <!-- ACCOUNT INFORMATION -->
+                <section class="account-card">
+
+                    <div class="account-card-header">
+                        <h2>Account Information</h2>
+
+                        <button
+                            type="button"
+                            class="account-edit-button"
+                            id="editAccountButton">
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="accountInformationForm">
+
+                        <!-- FULL NAME -->
+                        <div class="account-field">
+                            <label for="accountFullName">Full Name</label>
+
+                            <input
+                                type="text"
+                                id="accountFullName"
+                                name="fullName"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                                disabled>
+                        </div>
+
+                        <!-- EMAIL ADDRESS -->
+                        <div class="account-field">
+                            <label for="accountEmail">Email Address</label>
+
+                            <input
+                                type="email"
+                                id="accountEmail"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                                disabled>
+                        </div>
+
+                        <!-- DATE OF BIRTH -->
+                        <div class="account-field">
+                            <label for="accountDateOfBirth">Date of Birth</label>
+
+                            <input
+                                type="date"
+                                id="accountDateOfBirth"
+                                name="dateOfBirth"
+                                disabled>
+                        </div>
+
+                        <!-- PHONE NUMBER -->
+                        <div class="account-field">
+                            <label for="accountPhone">Phone Number</label>
+
+                            <input
+                                type="tel"
+                                id="accountPhone"
+                                name="phone"
+                                placeholder="Enter your phone number"
+                                autocomplete="tel"
+                                disabled>
+                        </div>
+
+                        <!-- SHIPPING ADDRESS -->
+                        <div class="account-field address-field">
+                            <label for="accountShippingAddress">
+                                Shipping Address
+                            </label>
+
+                            <textarea
+                                id="accountShippingAddress"
+                                name="shippingAddress"
+                                rows="3"
+                                placeholder="Enter your shipping address"
+                                autocomplete="street-address"
+                                disabled></textarea>
+                        </div>
+
+                        <!-- ACCOUNT ACTIONS -->
+                        <div class="account-actions" id="accountActions" hidden>
+
+                            <button
+                                type="button"
+                                class="account-cancel-button"
+                                id="cancelAccountButton">
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="account-save-button">
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- PREFERENCES -->
+                <section class="account-card">
+
+                    <div class="account-card-header">
+                        <h2>Preferences</h2>
+
+                        <button
+                            type="button"
+                            class="account-edit-button"
+                            id="editPreferencesButton">
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="preferencesForm">
+
+                        <!-- EMAIL NOTIFICATIONS -->
+                        <div class="preference-field">
+
+                            <label for="emailNotifications">
+                                Email Notifications
+                            </label>
+
+                            <div class="preference-control">
+                                <input
+                                    type="checkbox"
+                                    id="emailNotifications"
+                                    name="emailNotifications"
+                                    checked
+                                    disabled>
+
+                                <label for="emailNotifications">
+                                    Receive updates about new releases, offers and more
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <!-- MARKETING EMAILS -->
+                        <div class="preference-field">
+
+                            <label for="marketingEmails">
+                                Marketing Emails
+                            </label>
+
+                            <div class="preference-control">
+                                <input
+                                    type="checkbox"
+                                    id="marketingEmails"
+                                    name="marketingEmails"
+                                    checked
+                                    disabled>
+
+                                <label for="marketingEmails">
+                                    Receive marketing and promotional emails
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <!-- LANGUAGE -->
+                        <div class="preference-field language-field">
+
+                            <label for="accountLanguage">
+                                Language
+                            </label>
+
+                            <select
+                                id="accountLanguage"
+                                name="language"
+                                disabled>
+
+                                <option value="English">English</option>
+                                <option value="Nepali">Nepali</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="French">French</option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- PREFERENCES ACTIONS -->
+                        <div
+                            class="account-actions"
+                            id="preferencesActions"
+                            hidden>
+
+                            <button
+                                type="button"
+                                class="account-cancel-button"
+                                id="cancelPreferencesButton">
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="account-save-button">
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+            <!-- FEEDBACK MESSAGE -->
+            <p
+                id="accountMessage"
+                class="account-message"
+                role="status"
+                aria-live="polite"
+                hidden></p>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- ACCOUNT JAVASCRIPT -->
+    <script src="account.js"></script>
+
+</body>
+</html>

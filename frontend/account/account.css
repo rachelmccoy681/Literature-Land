@@ -1,0 +1,395 @@
+
+/* ACCOUNT PAGE */
+
+.account-main {
+    flex: 1;
+    min-width: 0;
+    padding: 35px 40px 60px;
+    background-color: #FAF7F2;
+    color: #51382B;
+    min-height: calc(100vh - 80px);
+    box-sizing: border-box;
+}
+
+/* PAGE HEADING */
+
+.account-heading {
+    margin-bottom: 28px;
+}
+
+.account-heading h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #51382B;
+}
+
+.account-heading p {
+    margin: 0;
+    font-size: 14px;
+    color: #806C5D;
+}
+
+/* ACCOUNT GRID */
+
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+/* ACCOUNT CARDS */
+
+.account-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E6D9CC;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(81, 56, 43, 0.05);
+}
+
+/* CARD HEADER */
+
+.account-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 22px;
+    background-color: #F5EDE4;
+    border-bottom: 1px solid #E6D9CC;
+}
+
+.account-card-header h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: #51382B;
+}
+
+/* EDIT BUTTON */
+
+.account-edit-button {
+    padding: 8px 22px;
+    background-color: #FFFFFF;
+    color: #51382B;
+    border: 1px solid #A68A73;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.account-edit-button:hover {
+    background-color: #EADCCF;
+}
+
+/* ACCOUNT INFORMATION FIELDS */
+
+.account-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 68px;
+    padding: 14px 22px;
+    border-bottom: 1px solid #EFE6DD;
+    box-sizing: border-box;
+}
+
+.account-field:last-of-type {
+    border-bottom: none;
+}
+
+.account-field > label {
+    flex: 0 0 125px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #51382B;
+}
+
+.account-field input,
+.account-field textarea {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #DCCBBB;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    color: #51382B;
+    font-family: inherit;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.account-field textarea {
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.5;
+}
+
+/* READ-ONLY APPEARANCE */
+
+.account-field input:disabled,
+.account-field textarea:disabled {
+    background-color: transparent;
+    border-color: transparent;
+    color: #665347;
+    opacity: 1;
+    -webkit-text-fill-color: #665347;
+    cursor: default;
+    padding-left: 0;
+}
+
+.account-field input:disabled::placeholder,
+.account-field textarea:disabled::placeholder {
+    color: #AA9A8B;
+    -webkit-text-fill-color: #AA9A8B;
+}
+
+/* SHIPPING ADDRESS */
+
+.address-field {
+    align-items: flex-start;
+    min-height: 105px;
+}
+
+.address-field > label {
+    padding-top: 10px;
+}
+
+/* PREFERENCE FIELDS */
+
+.preference-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 90px;
+    padding: 16px 22px;
+    border-bottom: 1px solid #EFE6DD;
+    box-sizing: border-box;
+}
+
+.preference-field:last-of-type {
+    border-bottom: none;
+}
+
+.preference-field > label {
+    flex: 0 0 135px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #51382B;
+}
+
+/* CHECKBOX PREFERENCES */
+
+.preference-control {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.preference-control input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    flex-shrink: 0;
+    accent-color: #74523D;
+    cursor: pointer;
+}
+
+.preference-control input[type="checkbox"]:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.preference-control label {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #665347;
+    cursor: pointer;
+}
+
+/* LANGUAGE */
+
+.language-field {
+    min-height: 105px;
+}
+
+.language-field select {
+    flex: 1;
+    max-width: 220px;
+    padding: 10px 12px;
+    background-color: #FFFFFF;
+    color: #51382B;
+    border: 1px solid #DCCBBB;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.language-field select:disabled {
+    background-color: #F8F4EF;
+    color: #665347;
+    opacity: 1;
+    cursor: default;
+}
+
+/* INPUT FOCUS */
+
+.account-field input:focus,
+.account-field textarea:focus,
+.language-field select:focus {
+    outline: none;
+    border-color: #8B654D;
+    box-shadow: 0 0 0 3px rgba(139, 101, 77, 0.12);
+}
+
+/* SAVE AND CANCEL BUTTONS */
+
+.account-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 18px 22px;
+    background-color: #FCF9F6;
+    border-top: 1px solid #EFE6DD;
+}
+
+.account-actions[hidden] {
+    display: none;
+}
+
+.account-save-button,
+.account-cancel-button {
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.account-save-button {
+    background-color: #74523D;
+    border: 1px solid #74523D;
+    color: #FFFFFF;
+}
+
+.account-save-button:hover {
+    background-color: #51382B;
+}
+
+.account-cancel-button {
+    background-color: #FFFFFF;
+    border: 1px solid #D4C2B2;
+    color: #51382B;
+}
+
+.account-cancel-button:hover {
+    background-color: #F1E7DD;
+}
+
+/* SUCCESS AND ERROR MESSAGE */
+
+.account-message {
+    margin-top: 22px;
+    padding: 13px 16px;
+    background-color: #F0E8DE;
+    border: 1px solid #DCCBBB;
+    border-radius: 7px;
+    color: #51382B;
+    font-size: 13px;
+}
+
+.account-message[hidden] {
+    display: none;
+}
+
+.account-message.error {
+    background-color: #FFF0EE;
+    border-color: #E5B4AC;
+    color: #A33B32;
+}
+
+/* KEEP HIDDEN ELEMENTS HIDDEN */
+
+.account-main [hidden] {
+    display: none;
+}
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+
+    .account-main {
+        padding: 28px 24px 45px;
+    }
+
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .account-main {
+        padding: 22px 16px 35px;
+    }
+
+    .account-heading h1 {
+        font-size: 27px;
+    }
+
+    .account-card-header {
+        padding: 16px;
+    }
+
+    .account-card-header h2 {
+        font-size: 17px;
+    }
+
+    .account-field {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 14px 16px;
+    }
+
+    .account-field > label {
+        flex: none;
+    }
+
+    .address-field > label {
+        padding-top: 0;
+    }
+
+    .preference-field {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .preference-field > label {
+        flex: none;
+    }
+
+    .language-field select {
+        max-width: 100%;
+    }
+
+    .account-actions {
+        padding: 15px 16px;
+    }
+
+}

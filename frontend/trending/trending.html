@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trending Now | Literature Land</title>
+
+    <!-- SHARED STYLES -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- TRENDING STYLES -->
+    <link rel="stylesheet" href="trending.css">
+
+</head>
+
+<body>
+
+    <!-- SHARED HEADER -->
+    <div id="header-container"></div>
+
+    <div class="page-container">
+
+        <!-- SHARED SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- TRENDING CONTENT -->
+        <main class="trending-main">
+
+            <!-- PAGE HEADING -->
+            <div class="trending-heading">
+                <h1>Trending Now</h1>
+                <p id="trendingDescription">
+                    Discover books our readers are exploring.
+                </p>
+            </div>
+
+            <!-- GENRE FILTERS -->
+            <div class="trending-filters" id="trendingFilters">
+
+                <button type="button" class="trending-filter active" data-genre="all">
+                    All
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Fiction">
+                    Fiction
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Non-Fiction">
+                    Non-Fiction
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Mystery">
+                    Mystery
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Thriller">
+                    Thriller
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Romance">
+                    Romance
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Science Fiction">
+                    Science Fiction
+                </button>
+
+                <button type="button" class="trending-filter" data-genre="Fantasy">
+                    Fantasy
+                </button>
+
+                <!-- MORE GENRES -->
+                <select id="trendingMoreGenres" aria-label="More genres">
+                    <option value="">More</option>
+                    <option value="Biography">Biography</option>
+                    <option value="History">History</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Classics">Classics</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Children's Books">Children's Books</option>
+                </select>
+
+            </div>
+
+            <!-- STATUS MESSAGE -->
+            <p id="trendingMessage" class="trending-message" role="status">
+                Loading books...
+            </p>
+
+            <!-- BOOK GRID -->
+            <section
+                class="trending-grid"
+                id="trendingGrid"
+                aria-label="Trending books">
+
+                <!-- BOOKS ADDED BY JAVASCRIPT -->
+
+            </section>
+
+            <!-- PAGINATION -->
+            <nav
+                class="trending-pagination"
+                id="trendingPagination"
+                aria-label="Book pages">
+
+                <!-- BUTTONS ADDED BY JAVASCRIPT -->
+
+            </nav>
+
+        </main>
+
+    </div>
+
+    <!-- SVG ICON LIBRARY -->
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- TRENDING JAVASCRIPT -->
+    <script src="trending.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shopping Cart | Literature Land</title>
+
+    <!-- GLOBAL STYLESHEET -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- CART STYLESHEET -->
+    <link rel="stylesheet" href="cart.css">
+    
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE CONTAINER -->
+    <div class="page-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- PAGE HEADING -->
+            <div class="cart-page-heading">
+
+                <div>
+                    <h1>Your Shopping Cart</h1>
+                    <p id="cartItemCount">Loading your cart...</p>
+                </div>
+
+                <a href="../browse/browse.html" class="continue-shopping-top">
+                    <span>←</span>
+                    Continue Shopping
+                </a>
+
+            </div>
+
+            <!-- CART CONTENT -->
+            <div class="cart-layout">
+
+                <!-- CART ITEMS PANEL -->
+                <section class="cart-items-panel">
+
+                    <!-- CART TABLE HEADER -->
+                    <div class="cart-table-header">
+
+                        <label class="select-all-label">
+                            <input type="checkbox" id="selectAll" checked>
+                            <span>Select All</span>
+                        </label>
+
+                        <span>Item</span>
+                        <span>Price</span>
+                        <span>Quantity</span>
+                        <span>Total</span>
+
+                    </div>
+
+                    <!-- CART ITEMS FROM BACKEND -->
+                    <div id="cartItems">
+
+                        <p class="cart-loading">
+                            Loading cart items...
+                        </p>
+
+                    </div>
+
+                    <!-- CART ACTIONS -->
+                    <div class="cart-actions">
+
+                        <button type="button" id="clearCart" class="clear-cart-button">
+
+                            Clear Cart
+
+                            <img src="../assets/icons/trash-2.svg" alt="">
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- ORDER SUMMARY -->
+                <aside class="order-summary">
+
+                    <h2>Order Summary</h2>
+
+                    <!-- SUBTOTAL -->
+                    <div class="summary-row">
+
+                        <span id="subtotalLabel">Subtotal (0 items)</span>
+
+                        <span id="subtotalAmount">$0.00</span>
+
+                    </div>
+
+                    <!-- SHIPPING -->
+                    <div class="summary-row shipping-row">
+
+                        <div>
+                            <span>Shipping</span>
+                            <small>Free delivery on orders over $50</small>
+                        </div>
+
+                        <span id="shippingAmount">$0.00</span>
+
+                    </div>
+
+                    <!-- TOTAL -->
+                    <div class="summary-total">
+
+                        <strong>Total (AUD)</strong>
+
+                        <strong id="cartTotal">$0.00</strong>
+
+                    </div>
+
+                    <!-- CHECKOUT -->
+                    <button type="button" id="checkoutButton" class="checkout-button">
+
+                        Proceed to Checkout
+
+                    </button>
+
+                    <p class="shopping-divider">or</p>
+
+                    <!-- CONTINUE SHOPPING -->
+                    <a href="../browse/browse.html" class="continue-shopping-button">
+
+                        Continue Shopping
+
+                    </a>
+
+                    <!-- DELIVERY INFORMATION -->
+                    <div class="cart-benefits">
+
+                        <div class="benefit-item">
+                            <img src="../assets/icons/truck.svg" alt="">
+                            <span>Free delivery on orders over $50</span>
+                        </div>
+
+                        <div class="benefit-item">
+                            <img src="../assets/icons/refresh-cw.svg" alt="">
+                            <span>30-day returns</span>
+                        </div>
+
+                        <div class="benefit-item">
+                            <img src="../assets/icons/shield-check.svg" alt="">
+                            <span>Secure payment</span>
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+            <!-- RECOMMENDED BOOKS -->
+            <section class="cart-recommended-section">
+
+                <div class="cart-section-heading">
+
+                    <h2>You Might Also Like</h2>
+
+                    <a href="../browse/browse.html" class="see-more">
+                        See More →
+                    </a>
+
+                </div>
+
+                <!-- RECOMMENDED BOOKS FROM STOCK SERVICE -->
+                <div class="cart-recommended-books" id="recommendedBooks">
+
+                    <!-- BOOKS WILL BE ADDED HERE USING JAVASCRIPT -->
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- SHOPPING CART JAVASCRIPT -->
+    <script src="cart.js"></script>
+
+</body>
+
+</html>

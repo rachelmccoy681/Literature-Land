@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Literature Land</title>
+
+    <!-- GLOBAL STYLESHEET -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- CHECKOUT STYLESHEET -->
+    <link rel="stylesheet" href="checkout.css">
+
+</head>
+
+<body>
+
+    <!-- SHARED HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE LAYOUT -->
+    <div class="page-layout">
+
+        <!-- SHARED SIDEBAR -->
+        <div id="sidebar-container"></div>
+
+        <!-- MAIN CONTENT -->
+        <main class="checkout-main">
+
+            <h1>Checkout</h1>
+
+            <!-- CHECKOUT PROGRESS -->
+            <div class="checkout-progress">
+
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <span>Shipping</span>
+                </div>
+
+                <div class="progress-line"></div>
+
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <span>Payment</span>
+                </div>
+
+                <div class="progress-line"></div>
+
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <span>Review & Place Order</span>
+                </div>
+
+            </div>
+
+            <!-- CHECKOUT CONTENT -->
+            <div class="checkout-content">
+
+                <!-- LEFT COLUMN -->
+                <div class="checkout-left">
+
+                    <!-- SHIPPING INFORMATION -->
+                    <section class="checkout-section" id="shippingInformationSection">
+
+                        <h2>1. Shipping Information</h2>
+
+                        <form id="shippingForm">
+
+                            <!-- NAME AND PHONE -->
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label for="fullName">Full Name *</label>
+
+                                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name"
+                                        autocomplete="name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone Number *</label>
+
+                                    <input type="tel" id="phoneNumber" name="phoneNumber"
+                                        placeholder="Enter your phone number" autocomplete="tel" required>
+                                </div>
+
+                            </div>
+
+                            <!-- ADDRESS -->
+                            <div class="form-group">
+
+                                <label for="streetAddress">Address *</label>
+
+                                <input type="text" id="streetAddress" name="streetAddress"
+                                    placeholder="Enter your street address" autocomplete="street-address" required>
+
+                            </div>
+
+                            <!-- SUBURB, STATE AND POSTCODE -->
+                            <div class="form-row address-row">
+
+                                <div class="form-group">
+
+                                    <label for="suburb">Suburb *</label>
+
+                                    <input type="text" id="suburb" name="suburb" placeholder="Enter suburb" required>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="state">State *</label>
+
+                                    <select id="state" name="state" required>
+                                        <option value="NSW">NSW</option>
+                                        <option value="VIC">VIC</option>
+                                        <option value="QLD">QLD</option>
+                                        <option value="WA">WA</option>
+                                        <option value="SA">SA</option>
+                                        <option value="TAS">TAS</option>
+                                        <option value="ACT">ACT</option>
+                                        <option value="NT">NT</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="postcode">Postcode *</label>
+
+                                    <input type="text" id="postcode" name="postcode" placeholder="Enter postcode"
+                                        inputmode="numeric" maxlength="4" pattern="[0-9]{4}" required>
+
+                                </div>
+
+                            </div>
+
+                            <!-- DEFAULT ADDRESS -->
+                            <label class="default-address">
+
+                                <input type="checkbox" id="defaultAddress" name="defaultAddress" checked>
+
+                                <span>Use as default shipping address</span>
+
+                            </label>
+
+                        </form>
+
+                    </section>
+
+                    <!-- SHIPPING METHOD -->
+                    <section class="checkout-section" id="shippingMethodSection">
+
+                        <h2>2. Shipping Method</h2>
+
+                        <div class="shipping-options">
+
+                            <!-- STANDARD SHIPPING -->
+                            <label class="shipping-option selected">
+
+                                <input type="radio" name="shippingMethod" value="standard" checked>
+
+                                <div class="shipping-details">
+
+                                    <h3>Standard Shipping</h3>
+                                    <p>Usually arrives in 3–7 business days</p>
+
+                                </div>
+
+                                <div class="shipping-price">
+                                    <strong id="standardShippingPrice">Free</strong>
+                                    <span>Orders over $50</span>
+                                </div>
+
+                            </label>
+
+                            <!-- EXPRESS SHIPPING -->
+                            <label class="shipping-option">
+
+                                <input type="radio" name="shippingMethod" value="express">
+
+                                <div class="shipping-details">
+
+                                    <h3>Express Shipping</h3>
+                                    <p>Usually arrives in 1–3 business days</p>
+
+                                </div>
+
+                                <div class="shipping-price">
+                                    <strong>$9.99</strong>
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    </section>
+
+                    <!-- PAYMENT DETAILS -->
+                    <section class="checkout-section payment-section" id="paymentSection" hidden>
+
+                        <div class="payment-heading">
+
+                            <h2>2. Payment Details</h2>
+
+                            <p>Demo payment only — do not enter real card details.</p>
+
+                        </div>
+
+                        <form id="paymentForm" autocomplete="off">
+
+                            <!-- CARDHOLDER NAME -->
+                            <div class="form-group">
+
+                                <label for="cardholderName">Cardholder Name *</label>
+
+                                <input type="text" id="cardholderName" name="cardholderName"
+                                    placeholder="Enter name as shown on card" autocomplete="off" required>
+
+                            </div>
+
+                            <!-- CARD NUMBER -->
+                            <div class="form-group">
+
+                                <label for="cardNumber">Card Number *</label>
+
+                                <input type="text" id="cardNumber" name="cardNumber" placeholder="Demo card number"
+                                    inputmode="numeric" autocomplete="off" maxlength="19" required>
+
+                            </div>
+
+                            <!-- EXPIRY AND CVV -->
+                            <div class="form-row payment-card-row">
+
+                                <div class="form-group">
+
+                                    <label for="expiryDate">Expiry Date *</label>
+
+                                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM / YY"
+                                        inputmode="numeric" autocomplete="off" maxlength="7" required>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="cardCvv">CVV *</label>
+
+                                    <input type="password" id="cardCvv" name="cardCvv" placeholder="Demo CVV"
+                                        inputmode="numeric" autocomplete="off" maxlength="4" required>
+
+                                </div>
+
+                            </div>
+
+                            <!-- PAYMENT BUTTONS -->
+                            <div class="payment-actions">
+
+                                <button type="button" id="backToShipping" class="back-button">
+                                    ← Back to Shipping
+                                </button>
+
+                                <button type="button" id="reviewOrder" class="review-button">
+                                    Review Order →
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- REVIEW ORDER -->
+                    <section class="checkout-section review-section" id="reviewSection" hidden>
+
+                        <h2>3. Review & Place Order</h2>
+
+                        <p class="review-description">
+                            Please review your order details before placing an order.
+                        </p>
+
+                        <!-- REVIEW ITEMS -->
+                        <div class="review-block">
+
+                            <div class="review-heading">
+
+                                <h3 id="reviewItemsTitle">Items (0)</h3>
+
+                                <a href="../cart/cart.html" class="edit-cart">
+                                    Edit Cart
+                                </a>
+
+                            </div>
+
+                            <div id="reviewItems">
+
+                                <!-- ITEMS LOADED FROM CART -->
+
+                            </div>
+
+                        </div>
+
+                        <!-- REVIEW SHIPPING ADDRESS -->
+                        <div class="review-block">
+
+                            <div class="review-heading">
+
+                                <h3>Shipping Address</h3>
+
+                                <button type="button" id="editShippingAddress" class="edit-review-button">
+                                    Edit
+                                </button>
+
+                            </div>
+
+                            <div class="review-address">
+
+                                <p id="reviewFullName"></p>
+
+                                <p id="reviewStreetAddress"></p>
+
+                                <p id="reviewSuburbStatePostcode"></p>
+
+                                <p id="reviewPhoneNumber"></p>
+
+                                <p id="reviewShippingMethod"></p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- REVIEW PAYMENT METHOD -->
+                        <div class="review-block">
+
+                            <div class="review-heading">
+
+                                <h3>Payment Method</h3>
+
+                                <button type="button" id="editPaymentMethod" class="edit-review-button">
+                                    Edit
+                                </button>
+
+                            </div>
+
+                            <div class="review-payment">
+
+                                <p id="reviewCardDetails"></p>
+
+                                <p id="reviewCardExpiry"></p>
+
+                                <p class="demo-payment-note">
+                                    Demo payment — no real transaction will be made.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- BACK TO PAYMENT -->
+                        <div class="review-actions">
+
+                            <button type="button" id="backToPayment" class="back-button">
+                                ← Back to Payment
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <aside class="checkout-summary">
+
+                    <!-- SUMMARY HEADER -->
+                    <div class="summary-header">
+
+                        <h2>Order Summary</h2>
+
+                        <a href="../cart/cart.html" class="edit-cart" id="summaryEditCart">
+                            Edit Cart
+                        </a>
+
+                    </div>
+
+                    <!-- CART ITEMS -->
+                    <div id="checkoutItems">
+
+                        <!-- ITEMS LOADED FROM BACKEND -->
+
+                    </div>
+
+                    <!-- PRICE BREAKDOWN -->
+                    <div class="summary-prices">
+
+                        <div class="summary-row">
+
+                            <span id="checkoutSubtotalLabel">
+                                Subtotal (0 items)
+                            </span>
+
+                            <span id="checkoutSubtotal">$0.00</span>
+
+                        </div>
+
+                        <div class="summary-row">
+
+                            <span>Shipping</span>
+
+                            <span id="checkoutShipping">$0.00</span>
+
+                        </div>
+
+                        <p class="shipping-note">
+                            Free standard delivery on orders over $50
+                        </p>
+
+                    </div>
+
+                    <!-- TOTAL -->
+                    <div class="checkout-total">
+
+                        <strong>Total (AUD)</strong>
+
+                        <strong id="checkoutTotal">$0.00</strong>
+
+                    </div>
+
+                    <!-- PLACE ORDER -->
+                    <div id="placeOrderSection" hidden>
+
+                        <button type="button" id="placeOrderButton" class="continue-button">
+                            Place Order
+                        </button>
+
+                        <p class="order-terms">
+                            By placing your order, you agree to our
+                            Terms & Conditions and Privacy Policy.
+                        </p>
+
+                    </div>
+
+                    <!-- DELIVERY INFORMATION -->
+                    <div class="checkout-benefits">
+
+                        <p>🚚 Free delivery on orders over $50</p>
+
+                        <p>↻ 30-day returns</p>
+
+                        <p>♢ Demo payment only</p>
+
+                    </div>
+
+                    <!-- CONTINUE BUTTON -->
+                    <button type="button" id="continueToPayment" class="continue-button">
+                        Continue to Payment →
+                    </button>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- CHECKOUT JAVASCRIPT -->
+    <script src="checkout.js"></script>
+
+</body>
+
+</html>

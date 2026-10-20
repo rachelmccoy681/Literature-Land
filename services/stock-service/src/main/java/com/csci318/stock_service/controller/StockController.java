@@ -5,6 +5,7 @@ import com.csci318.stock_service.service.StockService;
 import com.csci318.stock_service.request.StockRequest;
 import com.csci318.stock_service.messaging.BookActivityPublisher;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// ALLOW FRONTEND TO ACCESS STOCK SERVICE
+
+@CrossOrigin(origins = {
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+})
 @RestController
 @RequestMapping("/books")
 public class StockController {
@@ -22,7 +29,8 @@ public class StockController {
     private final StockService stockService;
     private final BookActivityPublisher bookActivityPublisher;
 
-    // connects controller to stock service and kafka publisher
+    // CONNECTS CONTROLLER TO STOCK SERVICE AND KAFKA PUBLISHER
+
     public StockController(
             StockService stockService,
             BookActivityPublisher bookActivityPublisher) {
@@ -30,13 +38,15 @@ public class StockController {
         this.bookActivityPublisher = bookActivityPublisher;
     }
 
-    // allows customers to view all books
+    // ALLOWS CUSTOMERS TO VIEW ALL BOOKS
+
     @GetMapping
     public List<Book> getAllBooks() {
         return stockService.getAllBooks();
     }
 
-    // searches books and publishes search activity to kafka
+    // SEARCHES BOOKS AND PUBLISHES SEARCH ACTIVITY TO KAFKA
+
     @GetMapping("/search")
     public List<Book> searchBooks(@RequestParam String keyword) {
 
@@ -51,7 +61,8 @@ public class StockController {
         return books;
     }
 
-    // allows customers to filter books
+    // ALLOWS CUSTOMERS TO FILTER BOOKS
+
     @GetMapping("/filter")
     public List<Book> filterBooks(
             @RequestParam(required = false) String genre,
@@ -65,7 +76,8 @@ public class StockController {
                 genre, author, minPrice, maxPrice, available, minRating);
     }
 
-    // retrieves book details and publishes view activity to kafka
+    // RETRIEVES BOOK DETAILS AND PUBLISHES VIEW ACTIVITY TO KAFKA
+
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable Long id) {
 
@@ -78,7 +90,8 @@ public class StockController {
         return book;
     }
 
-    // reduces stock when books are purchased
+    // REDUCES STOCK WHEN BOOKS ARE PURCHASED
+
     @PostMapping("/{id}/reduce-stock")
     public Book reduceStock(
             @PathVariable Long id,
@@ -87,13 +100,15 @@ public class StockController {
         return stockService.reduceStock(id, quantity);
     }
 
-    // reduces stock for multiple books in one order
+    // REDUCES STOCK FOR MULTIPLE BOOKS IN ONE ORDER
+
     @PostMapping("/reduce-stock")
     public void reduceStockForOrder(@RequestBody List<StockRequest> items) {
         stockService.reduceStockForOrder(items);
     }
 
-    // get book details without recording a view event
+    // GET BOOK DETAILS WITHOUT RECORDING A VIEW EVENT
+
     @GetMapping("/{id}/details")
     public Book getBookDetails(@PathVariable Long id) {
         return stockService.getBookById(id);

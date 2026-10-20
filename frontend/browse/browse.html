@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Browse Books | Literature Land</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="browse.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE CONTAINER -->
+    <div class="page-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- SEARCH RESULTS HEADER -->
+            <div class="results-header">
+
+                <div>
+                    <h1>Browse Books</h1>
+                    <p id="resultsCount">Explore our collection of books</p>
+                </div>
+
+                <!-- SORT BOOKS -->
+                <div class="sort-container">
+
+                    <label for="sortBooks">Sort by:</label>
+
+                    <select id="sortBooks">
+                        <option value="relevance">Relevance</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="newest">Newest</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <!-- BROWSE CONTENT -->
+            <div class="browse-content">
+
+                <!-- FILTER PANEL -->
+                <aside class="filter-panel">
+
+                    <h2>Filters</h2>
+
+                    <!-- GENRE FILTER -->
+                    <div class="filter-group">
+
+                        <h3>Genre</h3>
+
+                        <div class="genre-options">
+
+                            <label>
+                                <input type="checkbox" value="Fiction">
+                                Fiction
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Non Fiction">
+                                Non Fiction
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Mystery">
+                                Mystery
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Romance">
+                                Romance
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Fantasy">
+                                Fantasy
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Science Fiction">
+                                Science Fiction
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Biography">
+                                Biography
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="History">
+                                History
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Travel">
+                                Travel
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Children's Books">
+                                Children's Books
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Classics">
+                                Classics
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Poetry">
+                                Poetry
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Adventure">
+                                Adventure
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Young Adult">
+                                Young Adult
+                            </label>
+
+                            <label>
+                                <input type="checkbox" value="Business">
+                                Business
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <!-- AUTHOR FILTER -->
+                    <div class="filter-group">
+
+                        <h3>Author</h3>
+
+                        <input
+                            type="text"
+                            id="authorFilter"
+                            placeholder="Enter author name..."
+                        >
+
+                    </div>
+
+                    <!-- PRICE FILTER -->
+                    <div class="filter-group">
+
+                        <h3>Price Range</h3>
+
+                        <div class="price-labels">
+                            <span>$0</span>
+                            <span id="priceValue">$100</span>
+                        </div>
+
+                        <input
+                            type="range"
+                            id="priceFilter"
+                            min="0"
+                            max="100"
+                            value="100"
+                        >
+
+                    </div>
+
+                    <!-- RATING FILTER -->
+                    <div class="filter-group">
+
+                        <h3>Rating</h3>
+
+                        <div class="rating-options">
+
+                            <label>
+                                <input type="radio" name="rating" value="5">
+                                ★★★★★
+                            </label>
+
+                            <label>
+                                <input type="radio" name="rating" value="4">
+                                ★★★★☆ & up
+                            </label>
+
+                            <label>
+                                <input type="radio" name="rating" value="3">
+                                ★★★☆☆ & up
+                            </label>
+
+                            <label>
+                                <input type="radio" name="rating" value="2">
+                                ★★☆☆☆ & up
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FILTER BUTTONS -->
+                    <div class="filter-buttons">
+
+                        <button id="applyFilters" type="button">
+                            Apply Filters
+                        </button>
+
+                        <button id="clearFilters" type="button">
+                            Clear All
+                        </button>
+
+                    </div>
+
+                </aside>
+
+                <!-- BOOK RESULTS -->
+                <section class="books-section">
+
+                    <!-- BOOK GRID -->
+                    <div class="books-grid" id="booksGrid">
+
+                        <!-- BOOKS WILL BE DISPLAYED HERE -->
+
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="pagination">
+
+                        <!-- PAGE BUTTONS ADDED BY JAVASCRIPT -->
+
+                    </div>
+
+                    <!-- RESULTS INFORMATION -->
+                    <p class="results-info" id="resultsInfo">
+                        Showing 0 results
+                    </p>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- BROWSE BOOKS JAVASCRIPT -->
+    <script src="browse.js"></script>
+
+</body>
+
+</html>

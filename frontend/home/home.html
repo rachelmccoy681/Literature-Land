@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Literature Land</title>
+
+    <!-- GLOBAL STYLES -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- HOME STYLES -->
+    <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE CONTAINER -->
+    <div class="page-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- WELCOME BANNER -->
+            <section class="welcome-banner">
+
+                <div class="welcome-text">
+                    <h1>Discover Your<br>Next Great Read</h1>
+
+                    <p>
+                        Explore thousands of books, find new favourites,
+                        and get personalised recommendations.
+                    </p>
+
+                    <a href="../browse/browse.html" class="browse-button">
+                        Browse Books
+                    </a>
+                </div>
+
+                <!-- BANNER IMAGE -->
+                <div class="welcome-image">
+                    <span>Book Image</span>
+                </div>
+
+            </section>
+
+            <!-- TRENDING BOOKS -->
+            <section class="trending-section">
+
+                <div class="section-header">
+                    <h2>Trending Now <span>(Real-Time)</span></h2>
+
+                    <a href="../browse/trending.html" class="see-all">
+                        See all &rsaquo;
+                    </a>
+                </div>
+
+                <!-- BOOK LIST -->
+                <div class="trending-container">
+
+                    <button class="slider-arrow" id="previousBooks" aria-label="Previous books">
+                        &#10094;
+                    </button>
+
+                    <div class="book-list" id="trendingBooks">
+
+                        <!-- BOOK 1 -->
+                        <div class="book-card">
+                            <div class="book-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p class="book-author">Author Name</p>
+                            <p class="book-rating">★★★★☆ <span>(167)</span></p>
+                            <p class="book-price">$23.99</p>
+                            <p class="book-stock in-stock">● In Stock</p>
+                        </div>
+
+                        <!-- BOOK 2 -->
+                        <div class="book-card">
+                            <div class="book-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p class="book-author">Author Name</p>
+                            <p class="book-rating">★★★★★ <span>(222)</span></p>
+                            <p class="book-price">$23.99</p>
+                            <p class="book-stock low-stock">● Low Stock</p>
+                        </div>
+
+                        <!-- BOOK 3 -->
+                        <div class="book-card">
+                            <div class="book-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p class="book-author">Author Name</p>
+                            <p class="book-rating">★★★☆☆ <span>(178)</span></p>
+                            <p class="book-price">$23.99</p>
+                            <p class="book-stock in-stock">● In Stock</p>
+                        </div>
+
+                        <!-- BOOK 4 -->
+                        <div class="book-card">
+                            <div class="book-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p class="book-author">Author Name</p>
+                            <p class="book-rating">★★★★☆ <span>(100)</span></p>
+                            <p class="book-price">$23.99</p>
+                            <p class="book-stock in-stock">● In Stock</p>
+                        </div>
+
+                        <!-- BOOK 5 -->
+                        <div class="book-card">
+                            <div class="book-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p class="book-author">Author Name</p>
+                            <p class="book-rating">★★★★☆ <span>(121)</span></p>
+                            <p class="book-price">$23.99</p>
+                            <p class="book-stock out-of-stock">● Out Of Stock</p>
+                        </div>
+
+                    </div>
+
+                    <button class="slider-arrow" id="nextBooks" aria-label="Next books">
+                        &#10095;
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- BROWSE BY CATEGORY -->
+            <section class="categories-section">
+
+                <h2>Browse by Category</h2>
+
+                <div class="category-list">
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Fiction</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Non Fiction</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Mystery</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Romance</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Fantasy</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Science Fiction</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>Biography</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>History</span>
+                    </a>
+
+                    <a href="../browse/categories.html" class="category-card">
+                        <span>More</span>
+                    </a>
+
+                </div>
+
+            </section>
+
+            <!-- RECOMMENDATIONS AND FEATURES -->
+            <section class="home-features">
+
+                <!-- RECOMMENDED FOR YOU -->
+                <div class="recommendations-section">
+
+                    <h2>Recommended For You</h2>
+
+                    <p class="section-description">
+                        Personalised recommendations based on your interests
+                    </p>
+
+                    <div class="recommended-books">
+
+                        <!-- BOOK 1 -->
+                        <div class="recommended-card">
+                            <div class="recommended-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p>Author Name</p>
+                            <p class="recommended-rating">★★★★☆</p>
+                            <p class="recommended-price">$23.99</p>
+                        </div>
+
+                        <!-- BOOK 2 -->
+                        <div class="recommended-card">
+                            <div class="recommended-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p>Author Name</p>
+                            <p class="recommended-rating">★★★★☆</p>
+                            <p class="recommended-price">$23.99</p>
+                        </div>
+
+                        <!-- BOOK 3 -->
+                        <div class="recommended-card">
+                            <div class="recommended-cover">Book Cover</div>
+                            <h3>Book Title</h3>
+                            <p>Author Name</p>
+                            <p class="recommended-rating">★★★★☆</p>
+                            <p class="recommended-price">$23.99</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT SIDE FEATURES -->
+                <div class="right-features">
+
+                    <!-- NEW RELEASES -->
+                    <div class="new-releases-section">
+
+                        <div class="new-releases-text">
+
+                            <h2>New Releases</h2>
+
+                            <p>
+                                Be the first to explore the latest titles.
+                            </p>
+
+                            <a href="../browse/browse.html" class="feature-button">
+                                View New Releases &rsaquo;
+                            </a>
+
+                        </div>
+
+                        <!-- NEW RELEASE IMAGES -->
+                        <div class="new-releases-images">
+                            <div class="release-cover"></div>
+                            <div class="release-cover"></div>
+                            <div class="release-cover"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- AI RECOMMENDATIONS -->
+                    <div class="ai-feature-section">
+
+                        <h2>Not sure what to read?</h2>
+
+                        <p>
+                            Let our AI assistant recommend books for you.
+                        </p>
+
+                        <a href="../chatbot/chatbot.html" class="feature-button">
+                            Ask AI for Recommendations &rsaquo;
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- JAVASCRIPT -->
+    <script src="home.js"></script>
+
+</body>
+
+</html>

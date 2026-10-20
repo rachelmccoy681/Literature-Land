@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Wishlist | Literature Land</title>
+
+    <!-- GLOBAL STYLESHEET -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- WISHLIST STYLESHEET -->
+    <link rel="stylesheet" href="wishlist.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+    <!-- PAGE LAYOUT -->
+    <div class="page-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar-container"></aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="wishlist-main">
+
+            <!-- PAGE HEADING -->
+            <div class="wishlist-heading">
+                <h1>My Wishlist</h1>
+                <p>Books you've saved for later.</p>
+                <p>Add items to your cart when you're ready to buy.</p>
+            </div>
+
+            <!-- WISHLIST CONTENT -->
+            <div class="wishlist-content">
+
+                <!-- SAVED BOOKS -->
+                <section class="wishlist-section">
+
+                    <div id="wishlistItems">
+
+                        <!-- WISHLIST ITEMS LOADED HERE -->
+
+                    </div>
+
+                    <!-- EMPTY WISHLIST -->
+                    <div id="emptyWishlist" class="empty-wishlist" hidden>
+
+                        <h2>Your wishlist is empty</h2>
+
+                        <p>
+                            Browse books and save your favourites here.
+                        </p>
+
+                        <a href="../browse/browse.html" class="browse-button">
+                            Browse Books
+                        </a>
+
+                    </div>
+
+                </section>
+
+                <!-- RECOMMENDATIONS -->
+                <aside class="wishlist-recommendations">
+
+                    <div class="recommendations-heading">
+
+                        <h2>You Might Also Like</h2>
+
+                        <a href="../browse/browse.html" class="see-more">
+                            See More →
+                        </a>
+
+                    </div>
+
+                    <div id="recommendedBooks">
+
+                        <!-- RECOMMENDATIONS LOADED HERE -->
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- SHARED CART COUNTER -->
+    <script src="../components/cart-header.js"></script>
+
+    <!-- WISHLIST JAVASCRIPT -->
+    <script src="wishlist.js"></script>
+
+</body>
+
+</html>
