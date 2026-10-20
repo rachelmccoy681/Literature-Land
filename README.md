@@ -2,23 +2,46 @@
 
 ## Quick start (Windows)
 
-Start Docker Desktop, then from the repository root run (or double-click)
-`start.cmd`. It starts Kafka, the stock, cart and order services (each in its
-own window, so you can read its logs), serves the frontend on port `5500`, and
-opens `http://127.0.0.1:5500/home/home.html` once everything is up. The first
-run downloads Maven dependencies and can take a few minutes.
+You need Java 21 or later, and Python or Node.js. Docker Desktop is optional
+(see [Running without Docker](#running-without-docker)).
+
+1. **Open Docker Desktop and leave it running in the background.** Wait until
+   it says the engine is running. You don't use Docker Desktop to open
+   anything; it only has to be running so the script can start Kafka.
+2. **Run `start.cmd` yourself.** In File Explorer, open the project folder
+   and double-click `start.cmd`, or run `.\start.cmd` from a terminal in that
+   folder.
+3. **Wait for the browser to open.** The script starts Kafka, opens one
+   window per service (stock, cart and order) where you can read its logs,
+   serves the frontend, and opens `http://127.0.0.1:5500/home/home.html` once
+   everything is up. The first run downloads dependencies and can take a few
+   minutes.
+4. **To stop**, double-click `stop.cmd` (or run `.\stop.cmd`). This closes the
+   service windows and stops Kafka. Closing the windows by hand stops the
+   services but leaves Kafka running in Docker.
+
+Options, when running from a terminal:
 
 ```sh
-.\start.cmd                                   # everything the frontend needs
 .\start.cmd -Services stock,cart,order,chatbot  # pick which services to start
-.\start.cmd -SkipKafka -NoBrowser
-.\stop.cmd                                    # close the service windows and stop Kafka
+.\start.cmd -SkipKafka                          # don't use Docker at all
+.\start.cmd -NoBrowser                          # don't open the browser
+.\stop.cmd -KeepKafka                           # stop the services, leave Kafka running
 ```
+
+### Running without Docker
+
+If Docker Desktop isn't installed or isn't running, the script prints a
+warning and continues without Kafka. The whole bookstore still works, but the
+order service's trending books and stock copy stop updating. The services run
+with `KAFKA_ENABLED=false`; to run the stock service by hand without a broker,
+set `KAFKA_ENABLED=false` first.
 
 ## Quick start (macOS and Linux)
 
-`start.sh` does the same thing, but runs the services in the background and
-writes their logs to `.run/logs/`:
+Start Docker (optional, as on Windows), then run `start.sh` from the project
+folder. It does the same thing as `start.cmd`, but runs the services in the
+background and writes their logs to `.run/logs/`:
 
 ```sh
 ./start.sh                                     # everything the frontend needs
@@ -30,13 +53,8 @@ writes their logs to `.run/logs/`:
 If you get `permission denied`, run `chmod +x start.sh stop.sh` once, or use
 `bash start.sh`.
 
-Docker is optional. Without it (or with `-SkipKafka`), the script starts the
-services with `KAFKA_ENABLED=false`: the whole bookstore works, but the
-order service's trending books and stock copy stop updating. To run the stock
-service by hand without a broker, set `KAFKA_ENABLED=false` first.
-
-Serving the frontend needs Python or Node.js. If VS Code Live Server is
-already running on port `5500`, the script uses it instead.
+On both systems, if VS Code Live Server is already running on port `5500`,
+the script uses it instead of starting its own server.
 
 ## Running services manually
 
