@@ -1,3 +1,40 @@
+// BACKEND API ADDRESS
+
+const API_URL = "http://localhost:8081/books";
+
+// STORE BOOKS FROM BACKEND
+
+let books = [];
+let filteredBooks = [];
+
+// PAGINATION SETTINGS
+
+let currentPage = 1;
+const booksPerPage = 9;
+
+
+// GET SEARCH TERM FROM URL
+
+function getSearchKeyword() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    return (
+        urlParams.get("search") ||
+        urlParams.get("keyword") ||
+        ""
+    ).trim();
+}
+
+
+// GET CATEGORY FROM URL
+
+function getSelectedCategory() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    return urlParams.get("genre");
+}
+
+
 // LOAD HEADER
 
 async function loadHeader() {
@@ -12,9 +49,9 @@ async function loadHeader() {
 
         document.getElementById("header-container").innerHTML = headerHTML;
 
-        // KEEP THE SEARCH TERM IN THE SEARCH BAR
+        // CONNECT HEADER SEARCH
 
-        document.getElementById("searchInput").value = getSearchKeyword();
+        setupBookSearch();
 
         // UPDATE CART COUNTER
 
@@ -26,9 +63,6 @@ async function loadHeader() {
         console.error("Error loading header:", error);
     }
 }
-
-// START HEADER
-loadHeader();
 
 
 // LOAD SIDEBAR
@@ -50,51 +84,10 @@ async function loadSidebar() {
     }
 }
 
-// START SIDEBAR
-loadSidebar();
-
-
-// BACKEND API ADDRESS
-
-const API_URL = "http://localhost:8081/books";
-
-
-// STORE BOOKS FROM BACKEND
-
-let books = [];
-let filteredBooks = [];
-
-
-// PAGINATION SETTINGS
-
-let currentPage = 1;
-const booksPerPage = 9;
-
-
-// GET CATEGORY FROM URL
-
-function getSelectedCategory() {
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    return urlParams.get("genre");
-}
-
-
-// GET SEARCH TERM FROM URL
-
-function getSearchKeyword() {
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    return (urlParams.get("search") || "").trim();
-}
-
 
 // SELECT CATEGORY FILTER
 
 function selectCategoryFilter() {
-
     const selectedCategory = getSelectedCategory();
 
     if (!selectedCategory) {
@@ -104,33 +97,120 @@ function selectCategoryFilter() {
     let categoryFound = false;
 
     document.querySelectorAll(".genre-options input").forEach(function (input) {
-
         if (
             input.value.trim().toLowerCase() ===
             selectedCategory.trim().toLowerCase()
         ) {
-
             input.checked = true;
             categoryFound = true;
-
         } else {
-
             input.checked = false;
-
         }
-
     });
 
     return categoryFound;
 }
 
 
+// SET UP HEADER SEARCH
+
+function setupBookSearch() {
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+
+    if (!searchInput) {
+        return;
+    }
+
+    // KEEP EXISTING SEARCH TERM IN HEADER
+
+    searchInput.value = getSearchKeyword();
+
+    if (!searchForm) {
+        return;
+    }
+
+    // SEARCH WHEN ENTER OR SEARCH BUTTON IS CLICKED
+
+    searchForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const searchKeyword = searchInput.value.trim();
+        const url = new URL(window.location.href);
+
+        // USE THE SEARCH PARAMETER EXPECTED BY THE BROWSE PAGE
+
+        if (searchKeyword) {
+            url.searchParams.set("search", searchKeyword);
+        } else {
+            url.searchParams.delete("search");
+        }
+
+        // REMOVE OLD KEYWORD PARAMETER
+
+        url.searchParams.delete("keyword");
+
+        // RELOAD PAGE WITH SEARCH KEYWORD
+
+        window.location.href = url.toString();
+    });
+}
+
+
+// UPDATE WISHLIST BUTTON
+
+function updateWishlistButton(button, bookId) {
+    if (!button) {
+        return;
+    }
+
+    // CHECK SAVED STATUS USING SHARED WISHLIST MANAGER
+
+    const isSaved = isSharedBookWishlisted(bookId);
+
+    button.classList.toggle("active", isSaved);
+
+    button.setAttribute("aria-pressed", String(isSaved));
+
+    button.setAttribute(
+        "aria-label",
+        isSaved ? "Remove from wishlist" : "Add to wishlist"
+    );
+
+    button.title = isSaved
+        ? "Remove from wishlist"
+        : "Add to wishlist";
+
+    button.dataset.wishlistId = bookId;
+
+    // DISPLAY FILLED DARK BROWN HEART WHEN SAVED
+
+    if (isSaved) {
+        button.innerHTML = `
+            <span
+                aria-hidden="true"
+                style="
+                    color: #503629;
+                    font-size: 25px;
+                    line-height: 1;
+                "
+            >♥</span>
+        `;
+    } else {
+        // DISPLAY ORIGINAL SVG HEART WHEN NOT SAVED
+
+        button.innerHTML = `
+            <img src="../assets/icons/heart.svg" alt="">
+        `;
+    }
+}
+
+
 // LOAD BOOKS FROM STOCK SERVICE
 
 async function loadBooks() {
-
     try {
-        // SEARCH THE STOCK SERVICE WHEN THERE IS A SEARCH TERM, OTHERWISE LOAD EVERY BOOK
+        // SEARCH THE STOCK SERVICE WHEN THERE IS A SEARCH TERM
 
         const keyword = getSearchKeyword();
 
@@ -148,32 +228,21 @@ async function loadBooks() {
 
         books = await response.json();
 
-        // UPDATE BOOK LIST
-
-        filteredBooks = [...books];
-
-        currentPage = 1;
+        if (!Array.isArray(books)) {
+            throw new Error("Invalid book data");
+        }
 
         // SELECT CATEGORY FROM URL
 
-        const categorySelected = selectCategoryFilter();
+        selectCategoryFilter();
 
-        // APPLY CATEGORY FILTER
+        // APPLY SEARCH AND FILTERS
 
-        if (categorySelected) {
+        applyBookFilters();
 
-            applyBookFilters();
-
-        } else {
-
-            sortBooks();
-
-        }
-
-        console.log("Books loaded from backend:", books);
+        console.log("Books loaded from backend:", books.length);
 
     } catch (error) {
-
         console.error("Error loading books:", error);
 
         document.getElementById("booksGrid").textContent =
@@ -185,7 +254,6 @@ async function loadBooks() {
 // DISPLAY BOOKS
 
 function displayBooks() {
-
     const booksGrid = document.getElementById("booksGrid");
 
     booksGrid.innerHTML = "";
@@ -196,7 +264,6 @@ function displayBooks() {
     const visibleBooks = filteredBooks.slice(startIndex, endIndex);
 
     visibleBooks.forEach(function (book) {
-
         // DISPLAY BOOK RATINGS
 
         const rating = Number(book.rating || 0);
@@ -209,25 +276,25 @@ function displayBooks() {
         const fullStars = "★".repeat(roundedRating);
         const emptyStars = "☆".repeat(5 - roundedRating);
 
+        // CREATE BOOK CARD
+
         const bookCard = document.createElement("div");
+
         bookCard.className = "browse-book-card";
 
         bookCard.innerHTML = `
-            <!-- WISHLIST -->
             <button
                 class="wishlist-button"
                 type="button"
-                aria-label="Add ${book.title} to wishlist"
+                aria-label="Add to wishlist"
             >
                 <img src="../assets/icons/heart.svg" alt="">
             </button>
 
-            <!-- BOOK COVER -->
             <div class="browse-book-cover">
                 Book Cover
             </div>
 
-            <!-- BOOK DETAILS -->
             <h3>${book.title}</h3>
 
             <p class="browse-book-author">
@@ -244,19 +311,39 @@ function displayBooks() {
             </p>
         `;
 
+        // CONNECT WISHLIST BUTTON
+
+        const wishlistButton = bookCard.querySelector(".wishlist-button");
+
+        // SHOW SAVED OR UNSAVED HEART
+
+        updateWishlistButton(wishlistButton, book.id);
+
+        // ADD OR REMOVE BOOK FROM WISHLIST
+
+        wishlistButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            // USE SHARED WISHLIST MANAGER
+
+            toggleSharedWishlistBook(book.id);
+
+            // UPDATE HEART APPEARANCE
+
+            updateWishlistButton(wishlistButton, book.id);
+        });
+
         // OPEN BOOK DETAILS WHEN BOOK CARD IS CLICKED
 
         bookCard.style.cursor = "pointer";
 
         bookCard.addEventListener("click", function (event) {
-
-            // DO NOT OPEN DETAILS WHEN WISHLIST IS CLICKED
+            // DO NOT OPEN DETAILS WHEN HEART IS CLICKED
 
             if (event.target.closest(".wishlist-button")) {
                 return;
             }
-
-            // OPEN SELECTED BOOK
 
             window.location.href =
                 `../book-details/book-details.html?id=${encodeURIComponent(book.id)}`;
@@ -270,8 +357,7 @@ function displayBooks() {
     const startResult =
         filteredBooks.length === 0 ? 0 : startIndex + 1;
 
-    const endResult =
-        Math.min(endIndex, filteredBooks.length);
+    const endResult = Math.min(endIndex, filteredBooks.length);
 
     document.getElementById("resultsInfo").textContent =
         filteredBooks.length === 0
@@ -293,15 +379,16 @@ function displayBooks() {
 // APPLY BOOK FILTERS
 
 function applyBookFilters() {
+    // GET SEARCH KEYWORD FROM URL
+
+    const keyword = getSearchKeyword().toLowerCase();
 
     // GET SELECTED GENRES
 
     const selectedGenres = Array.from(
         document.querySelectorAll(".genre-options input:checked")
     ).map(function (input) {
-
         return input.value.trim().toLowerCase();
-
     });
 
     // GET AUTHOR
@@ -328,6 +415,13 @@ function applyBookFilters() {
     // FILTER BOOKS
 
     filteredBooks = books.filter(function (book) {
+        // SEARCH IN TITLE, AUTHOR OR GENRE
+
+        const matchesSearch =
+            !keyword ||
+            String(book.title || "").toLowerCase().includes(keyword) ||
+            String(book.author || "").toLowerCase().includes(keyword) ||
+            String(book.genre || "").toLowerCase().includes(keyword);
 
         // CHECK GENRE
 
@@ -354,11 +448,13 @@ function applyBookFilters() {
         const matchesRating =
             Number(book.rating || 0) >= minRating;
 
-        return matchesGenre &&
+        return (
+            matchesSearch &&
+            matchesGenre &&
             matchesAuthor &&
             matchesPrice &&
-            matchesRating;
-
+            matchesRating
+        );
     });
 
     currentPage = 1;
@@ -374,9 +470,7 @@ function applyBookFilters() {
 document.getElementById("applyFilters").addEventListener(
     "click",
     function () {
-
         applyBookFilters();
-
     }
 );
 
@@ -384,57 +478,46 @@ document.getElementById("applyFilters").addEventListener(
 // SORT BOOKS
 
 function sortBooks() {
-
     const sortValue = document.getElementById("sortBooks").value;
 
     // PRICE LOW TO HIGH
 
     if (sortValue === "price-low") {
-
         filteredBooks.sort(function (a, b) {
             return a.price - b.price;
         });
-
     }
 
     // PRICE HIGH TO LOW
 
     if (sortValue === "price-high") {
-
         filteredBooks.sort(function (a, b) {
             return b.price - a.price;
         });
-
     }
 
     // HIGHEST RATING
 
     if (sortValue === "rating") {
-
         filteredBooks.sort(function (a, b) {
             return b.rating - a.rating;
         });
-
     }
 
     // NEWEST BOOKS
 
     if (sortValue === "newest") {
-
         filteredBooks.sort(function (a, b) {
             return b.id - a.id;
         });
-
     }
 
     // RELEVANCE
 
     if (sortValue === "relevance") {
-
         filteredBooks.sort(function (a, b) {
             return a.id - b.id;
         });
-
     }
 
     displayBooks();
@@ -446,11 +529,8 @@ function sortBooks() {
 document.getElementById("sortBooks").addEventListener(
     "change",
     function () {
-
         currentPage = 1;
-
         sortBooks();
-
     }
 );
 
@@ -458,7 +538,6 @@ document.getElementById("sortBooks").addEventListener(
 // UPDATE PAGINATION
 
 function updatePagination() {
-
     const totalPages = Math.max(
         1,
         Math.ceil(filteredBooks.length / booksPerPage)
@@ -473,15 +552,11 @@ function updatePagination() {
     const previousButton = document.createElement("button");
 
     previousButton.textContent = "‹";
-
     previousButton.disabled = currentPage === 1;
 
     previousButton.addEventListener("click", function () {
-
         currentPage--;
-
         displayBooks();
-
     });
 
     pagination.appendChild(previousButton);
@@ -489,7 +564,6 @@ function updatePagination() {
     // PAGE NUMBERS
 
     for (let page = 1; page <= totalPages; page++) {
-
         const pageButton = document.createElement("button");
 
         pageButton.textContent = page;
@@ -499,11 +573,8 @@ function updatePagination() {
         }
 
         pageButton.addEventListener("click", function () {
-
             currentPage = page;
-
             displayBooks();
-
         });
 
         pagination.appendChild(pageButton);
@@ -514,15 +585,11 @@ function updatePagination() {
     const nextButton = document.createElement("button");
 
     nextButton.textContent = "›";
-
     nextButton.disabled = currentPage === totalPages;
 
     nextButton.addEventListener("click", function () {
-
         currentPage++;
-
         displayBooks();
-
     });
 
     pagination.appendChild(nextButton);
@@ -534,14 +601,11 @@ function updatePagination() {
 document.getElementById("clearFilters").addEventListener(
     "click",
     function () {
-
         // CLEAR GENRE CHECKBOXES
 
         document.querySelectorAll(".genre-options input").forEach(
             function (input) {
-
                 input.checked = false;
-
             }
         );
 
@@ -553,13 +617,15 @@ document.getElementById("clearFilters").addEventListener(
 
         document.getElementById("priceFilter").value = 100;
 
+        // UPDATE PRICE LABEL
+
+        document.getElementById("priceValue").textContent = "$100";
+
         // CLEAR RATING
 
         document.querySelectorAll(".rating-options input").forEach(
             function (input) {
-
                 input.checked = false;
-
             }
         );
 
@@ -567,14 +633,17 @@ document.getElementById("clearFilters").addEventListener(
 
         document.getElementById("sortBooks").value = "relevance";
 
-        // REMOVE SELECTED CATEGORY AND SEARCH TERM FROM URL
+        // CHECK WHETHER A BACKEND SEARCH WAS ACTIVE
 
         const hadSearch = getSearchKeyword() !== "";
+
+        // REMOVE CATEGORY AND SEARCH FROM URL
 
         const url = new URL(window.location.href);
 
         url.searchParams.delete("genre");
         url.searchParams.delete("search");
+        url.searchParams.delete("keyword");
 
         window.history.replaceState(
             {},
@@ -582,7 +651,7 @@ document.getElementById("clearFilters").addEventListener(
             url.pathname + url.search + url.hash
         );
 
-        // CLEAR SEARCH BAR
+        // CLEAR HEADER SEARCH INPUT
 
         const searchInput = document.getElementById("searchInput");
 
@@ -590,11 +659,7 @@ document.getElementById("clearFilters").addEventListener(
             searchInput.value = "";
         }
 
-        // UPDATE PRICE LABEL
-
-        document.getElementById("priceValue").textContent = "$100";
-
-        // SEARCH RESULTS ONLY HOLD MATCHING BOOKS, SO LOAD EVERY BOOK AGAIN
+        // RELOAD ALL BOOKS IF THE BACKEND SEARCH WAS ACTIVE
 
         if (hadSearch) {
             loadBooks();
@@ -610,7 +675,6 @@ document.getElementById("clearFilters").addEventListener(
         // DISPLAY ALL BOOKS
 
         sortBooks();
-
     }
 );
 
@@ -620,14 +684,27 @@ document.getElementById("clearFilters").addEventListener(
 document.getElementById("priceFilter").addEventListener(
     "input",
     function () {
-
         document.getElementById("priceValue").textContent =
             "$" + this.value;
-
     }
 );
 
 
-// LOAD BOOKS FROM BACKEND WHEN PAGE OPENS
+// UPDATE HEARTS WHEN WISHLIST CHANGES
 
+window.addEventListener("wishlist:updated", function () {
+    document.querySelectorAll(".wishlist-button[data-wishlist-id]")
+        .forEach(function (button) {
+            updateWishlistButton(
+                button,
+                button.dataset.wishlistId
+            );
+        });
+});
+
+
+// START BROWSE PAGE
+
+loadHeader();
+loadSidebar();
 loadBooks();

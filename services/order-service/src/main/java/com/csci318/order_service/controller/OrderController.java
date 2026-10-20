@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-// ALLOW FRONTEND TO ACCESS ORDER SERVICE
-
+// ALLOW REQUESTS FROM THE LOCAL FRONTEND
 @CrossOrigin(origins = {
         "http://127.0.0.1:5500",
         "http://localhost:5500"
 })
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
 
-    // connects controller to order service
+    // CONNECT CONTROLLER TO ORDER SERVICE
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    // allows customers to place an order
+    // ALLOW CUSTOMERS TO PLACE AN ORDER
     @PostMapping
     public Order placeOrder(
             @RequestParam Long customerId,
@@ -41,15 +41,19 @@ public class OrderController {
         return orderService.placeOrder(customerId, items);
     }
 
-    // allows customers to view their order history
+    // ALLOW CUSTOMERS TO VIEW THEIR ORDER HISTORY
     @GetMapping("/customer/{customerId}")
-    public List<Order> getOrderHistory(@PathVariable Long customerId) {
+    public List<Order> getOrderHistory(
+            @PathVariable Long customerId) {
+
         return orderService.getOrderHistory(customerId);
     }
 
-    // allows customers to view books in an order
+    // ALLOW CUSTOMERS TO VIEW BOOKS IN AN ORDER
     @GetMapping("/{orderId}/items")
-    public List<OrderItem> getOrderItems(@PathVariable Long orderId) {
+    public List<OrderItem> getOrderItems(
+            @PathVariable Long orderId) {
+
         return orderService.getOrderItems(orderId);
     }
 }
