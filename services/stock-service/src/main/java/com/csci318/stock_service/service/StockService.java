@@ -37,10 +37,10 @@ public class StockService {
         return bookRepository.findAll();
     }
 
-    // searches books by title or author
+    // searches books by title, author or genre
     public List<Book> searchBooks(String keyword) {
-        return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(
-                keyword, keyword);
+        return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCaseOrGenreContainingIgnoreCase(
+                keyword, keyword, keyword);
     }
 
     // filters books based on customer preferences

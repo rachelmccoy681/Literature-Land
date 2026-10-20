@@ -16,9 +16,9 @@ import java.util.Optional;
 // handles database operations for books
 public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
 
-    // searches books by title or author
-    List<Book> findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(
-            String title, String author);
+    // searches books by title, author or genre
+    List<Book> findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCaseOrGenreContainingIgnoreCase(
+            String title, String author, String genre);
 
     // locks a book while its stock is being updated
     @Lock(LockModeType.PESSIMISTIC_WRITE)

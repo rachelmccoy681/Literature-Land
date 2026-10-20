@@ -46,8 +46,8 @@ public class BookstoreTools {
         this.jsonMapper = jsonMapper;
     }
 
-    @Tool("Searches the catalogue for books whose title or author contains a keyword")
-    public String searchBooks(@P("a word or phrase from a book title or author name") String keyword) {
+    @Tool("Searches the catalogue for books whose title, author or genre contains a keyword")
+    public String searchBooks(@P("a word or phrase from a book title, author name or genre") String keyword) {
         return respond(() -> stockClient.searchBooks(keyword), "No books matched that keyword.");
     }
 

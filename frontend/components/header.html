@@ -7,10 +7,12 @@
     </div>
 
     <!-- SEARCH BAR -->
-    <form class="header-search" id="searchForm">
+    <!-- SENDS THE SEARCH TO THE BROWSE PAGE AS ?search=... -->
+    <form class="header-search" id="searchForm" action="../browse/browse.html" method="get">
         <input
             type="search"
             id="searchInput"
+            name="search"
             placeholder="Search books, authors, genres..."
             aria-label="Search books"
         >

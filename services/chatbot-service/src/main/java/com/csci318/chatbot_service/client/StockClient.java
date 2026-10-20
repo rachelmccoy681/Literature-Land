@@ -20,7 +20,7 @@ public class StockClient {
         this.restClient = RestClient.create(stockUrl);
     }
 
-    // searches books by title or author (stock service records this as search activity for trending books)
+    // searches books by title, author or genre (stock service records this as search activity for trending books)
     public List<Book> searchBooks(String keyword) {
         return restClient.get()
                 .uri(uri -> uri.path("/books/search")

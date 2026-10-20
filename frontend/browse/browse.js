@@ -12,6 +12,10 @@ async function loadHeader() {
 
         document.getElementById("header-container").innerHTML = headerHTML;
 
+        // KEEP THE SEARCH TERM IN THE SEARCH BAR
+
+        document.getElementById("searchInput").value = getSearchKeyword();
+
         // UPDATE CART COUNTER
 
         if (typeof updateCartCount === "function") {
@@ -77,6 +81,16 @@ function getSelectedCategory() {
 }
 
 
+// GET SEARCH TERM FROM URL
+
+function getSearchKeyword() {
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    return (urlParams.get("search") || "").trim();
+}
+
+
 // SELECT CATEGORY FILTER
 
 function selectCategoryFilter() {
@@ -116,7 +130,15 @@ function selectCategoryFilter() {
 async function loadBooks() {
 
     try {
-        const response = await fetch(API_URL);
+        // SEARCH THE STOCK SERVICE WHEN THERE IS A SEARCH TERM, OTHERWISE LOAD EVERY BOOK
+
+        const keyword = getSearchKeyword();
+
+        const url = keyword
+            ? `${API_URL}/search?keyword=${encodeURIComponent(keyword)}`
+            : API_URL;
+
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error("Could not load books from backend");
@@ -256,8 +278,11 @@ function displayBooks() {
             ? "Showing 0 results"
             : `Showing ${startResult}-${endResult} of ${filteredBooks.length} results`;
 
-    document.getElementById("resultsCount").textContent =
-        `${filteredBooks.length} books found`;
+    const keyword = getSearchKeyword();
+
+    document.getElementById("resultsCount").textContent = keyword
+        ? `${filteredBooks.length} books found for "${keyword}"`
+        : `${filteredBooks.length} books found`;
 
     // UPDATE PAGINATION
 
@@ -542,11 +567,14 @@ document.getElementById("clearFilters").addEventListener(
 
         document.getElementById("sortBooks").value = "relevance";
 
-        // REMOVE SELECTED CATEGORY FROM URL
+        // REMOVE SELECTED CATEGORY AND SEARCH TERM FROM URL
+
+        const hadSearch = getSearchKeyword() !== "";
 
         const url = new URL(window.location.href);
 
         url.searchParams.delete("genre");
+        url.searchParams.delete("search");
 
         window.history.replaceState(
             {},
@@ -554,15 +582,30 @@ document.getElementById("clearFilters").addEventListener(
             url.pathname + url.search + url.hash
         );
 
+        // CLEAR SEARCH BAR
+
+        const searchInput = document.getElementById("searchInput");
+
+        if (searchInput) {
+            searchInput.value = "";
+        }
+
+        // UPDATE PRICE LABEL
+
+        document.getElementById("priceValue").textContent = "$100";
+
+        // SEARCH RESULTS ONLY HOLD MATCHING BOOKS, SO LOAD EVERY BOOK AGAIN
+
+        if (hadSearch) {
+            loadBooks();
+            return;
+        }
+
         // RESET BOOK LIST
 
         filteredBooks = [...books];
 
         currentPage = 1;
-
-        // UPDATE PRICE LABEL
-
-        document.getElementById("priceValue").textContent = "$100";
 
         // DISPLAY ALL BOOKS
 
