@@ -1,0 +1,6 @@
+# process ids written by start.ps1
+.run/
+
+# java crash reports
+hs_err_pid*.log
+replay_pid*.log
