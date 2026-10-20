@@ -4,6 +4,7 @@ import com.csci318.order_service.domain.Order;
 import com.csci318.order_service.domain.OrderItem;
 import com.csci318.order_service.service.OrderService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// ALLOW FRONTEND TO ACCESS ORDER SERVICE
+
+@CrossOrigin(origins = {
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+})
 @RestController
 @RequestMapping("/orders")
 public class OrderController {

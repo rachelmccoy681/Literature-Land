@@ -1,5 +1,25 @@
 # Literature-Land
 
+## Quick start (Windows)
+
+Start Docker Desktop, then from the repository root run (or double-click)
+`start.cmd`. It starts Kafka, the stock, cart and order services (each in its
+own window, so you can read its logs), serves the frontend on port `5500`, and
+opens `http://127.0.0.1:5500/home/home.html` once everything is up. The first
+run downloads Maven dependencies and can take a few minutes.
+
+```sh
+.\start.cmd                                   # everything the frontend needs
+.\start.cmd -Services stock,cart,order,chatbot  # pick which services to start
+.\start.cmd -SkipKafka -NoBrowser
+.\stop.cmd                                    # close the service windows and stop Kafka
+```
+
+Serving the frontend needs Python or Node.js. If VS Code Live Server is
+already running on port `5500`, the script uses it instead.
+
+## Running services manually
+
 To run the program, navigate to the service directory and type:
 `./mvnw clean test` and
 `./mvnw spring-boot:run`,
