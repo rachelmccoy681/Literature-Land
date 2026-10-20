@@ -11,11 +11,13 @@ You need Java 21 or later, and Python or Node.js. Docker Desktop is optional
 2. **Run `start.cmd` yourself.** In File Explorer, open the project folder
    and double-click `start.cmd`, or run `.\start.cmd` from a terminal in that
    folder.
-3. **Wait for the browser to open.** The script starts Kafka, opens one
-   window per service (stock, cart and order) where you can read its logs,
-   serves the frontend, and opens `http://127.0.0.1:5500/home/home.html` once
-   everything is up. The first run downloads dependencies and can take a few
-   minutes.
+3. **Wait for the browser to open.** The script starts Kafka, then opens one
+   window per service (stock, cart and order) where you can read its logs.
+   The services start one at a time, each after the previous one is up, so a
+   computer with little memory isn't overloaded. The script then serves the
+   frontend and opens `http://127.0.0.1:5500/home/home.html`. The first run
+   (including a fresh download or `.zip` of the project) downloads
+   dependencies and compiles every service, so it can take several minutes.
 4. **To stop**, double-click `stop.cmd` (or run `.\stop.cmd`). This closes the
    service windows and stops Kafka. Closing the windows by hand stops the
    services but leaves Kafka running in Docker.
@@ -31,11 +33,15 @@ Options, when running from a terminal:
 
 ### If a service crashes with "insufficient memory"
 
-A service that stops straight away and leaves an `hs_err_pid*.log` file
-saying *There is insufficient memory for the Java Runtime Environment to
-continue* means the computer ran out of RAM; the code is fine. The script
-already limits each Java process to 256 MB, so free up memory and run it
-again:
+These errors mean the computer ran out of memory; the code is fine:
+
+- A service stops straight away and leaves an `hs_err_pid*.log` file saying
+  *There is insufficient memory for the Java Runtime Environment to continue*.
+- A service window shows *Thread failed to start* and *Cannot start maven
+  from wrapper*. The script retries this automatically up to three times.
+
+The script already limits each Java process to 256 MB, so free up memory and
+run it again:
 
 - Close programs you don't need (browsers, Discord and so on).
 - Skip Docker with `.\start.cmd -SkipKafka`. Docker Desktop alone can use

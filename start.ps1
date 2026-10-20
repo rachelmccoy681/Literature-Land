@@ -53,11 +53,28 @@ function Wait-Port([int]$port, [string]$name, [int]$timeoutSeconds = 420) {
 
 # opens a new powershell window running the command and remembers its process id
 function Start-Window([string]$title, [string]$workingDir, [string]$command) {
-    $script = "`$host.UI.RawUI.WindowTitle = '$title'; Set-Location '$workingDir'; $command"
+    $quotedDir = $workingDir -replace "'", "''"
+    $script = "`$host.UI.RawUI.WindowTitle = '$title'`nSet-Location -LiteralPath '$quotedDir'`n$command"
+    # encoded so quotes, spaces and line breaks reach the new window unchanged
+    $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($script))
     $process = Start-Process powershell -PassThru -WorkingDirectory $workingDir `
-        -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", $script
+        -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-EncodedCommand", $encoded
     Add-Content -Path $pidFile -Value $process.Id
 }
+
+# the maven wrapper can fail in its first seconds ("Cannot start maven from wrapper") when
+# windows is short of memory, so a quick failure is retried; a failure after that is a real error
+$runServiceCommand = @'
+for ($attempt = 1; $attempt -le 3; $attempt++) {
+    $started = Get-Date
+    .\mvnw.cmd spring-boot:run
+    if ($LASTEXITCODE -eq 0 -or ((Get-Date) - $started).TotalSeconds -gt 20) { break }
+    if ($attempt -lt 3) {
+        Write-Host "Maven failed to start - trying again in 10 seconds (attempt $($attempt + 1) of 3)..." -ForegroundColor Yellow
+        Start-Sleep -Seconds 10
+    }
+}
+'@
 
 # "stock,cart" arrives as one string when passed through start.cmd
 $Services = @($Services -split "," | ForEach-Object { $_.Trim().ToLower() } | Where-Object { $_ })
@@ -92,8 +109,11 @@ if (-not $env:JAVA_TOOL_OPTIONS) {
     $env:JAVA_TOOL_OPTIONS = "-Xmx256m -XX:+UseSerialGC"
 }
 
-# 2. backend services, each in its own window so its logs stay visible
-Write-Host "Starting services: $($Services -join ', ')" -ForegroundColor Cyan
+# 2. backend services, each in its own window so its logs stay visible. they start one at a
+# time: starting them together can run a 4 GB machine out of memory, especially on the first
+# run when every service compiles
+Write-Host "Starting services one at a time: $($Services -join ', ')" -ForegroundColor Cyan
+Write-Host "(the first run downloads dependencies and compiles, so it can take a few minutes)"
 foreach ($service in $Services) {
     $port = $ports[$service]
     if (Test-Port $port) {
@@ -101,7 +121,8 @@ foreach ($service in $Services) {
         continue
     }
     $serviceDir = Join-Path $root "services\$service-service"
-    Start-Window "Literature Land - $service-service" $serviceDir ".\mvnw.cmd spring-boot:run"
+    Start-Window "Literature Land - $service-service" $serviceDir $runServiceCommand
+    Wait-Port $port "$service-service" | Out-Null
 }
 
 # 3. frontend on port 5500, the origin the services allow
@@ -117,12 +138,8 @@ if (Test-Port $FrontendPort) {
     throw "python or node is needed to serve the frontend"
 }
 
-# 4. wait until everything answers, then open the site
-Write-Host "Waiting for services (the first run downloads dependencies and can take a few minutes)..." -ForegroundColor Cyan
+# 4. wait for the frontend, then open the site
 Wait-Port $FrontendPort "frontend" 30 | Out-Null
-foreach ($service in $Services) {
-    Wait-Port $ports[$service] "$service-service" | Out-Null
-}
 
 $url = "http://127.0.0.1:$FrontendPort/home/home.html"
 Write-Host ""

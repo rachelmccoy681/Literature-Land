@@ -100,8 +100,10 @@ fi
 # each service runs maven plus its own java process, so cap their memory to fit on 4 GB machines
 export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:--Xmx256m -XX:+UseSerialGC}"
 
-# 2. backend services
-echo "Starting services: $services"
+# 2. backend services, one at a time: starting them together can run a small machine out of
+# memory, especially on the first run when every service compiles
+echo "Starting services one at a time: $services"
+echo "(the first run downloads dependencies and compiles, so it can take a few minutes)"
 for service in $services; do
     port="$(port_of "$service")"
     if port_open "$port"; then
@@ -109,6 +111,7 @@ for service in $services; do
         continue
     fi
     start_background "$service-service" "$root/services/$service-service" sh ./mvnw spring-boot:run
+    wait_port "$port" "$service-service"
 done
 
 # 3. frontend on port 5500, the origin the services allow
@@ -132,12 +135,8 @@ else
     exit 1
 fi
 
-# 4. wait until everything answers, then open the site
-echo "Waiting for services (the first run downloads dependencies and can take a few minutes)..."
+# 4. wait for the frontend, then open the site
 wait_port "$frontend_port" frontend 30
-for service in $services; do
-    wait_port "$(port_of "$service")" "$service-service"
-done
 
 url="http://127.0.0.1:$frontend_port/home/home.html"
 echo
