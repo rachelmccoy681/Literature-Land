@@ -15,6 +15,21 @@ run downloads Maven dependencies and can take a few minutes.
 .\stop.cmd                                    # close the service windows and stop Kafka
 ```
 
+## Quick start (macOS and Linux)
+
+`start.sh` does the same thing, but runs the services in the background and
+writes their logs to `.run/logs/`:
+
+```sh
+./start.sh                                     # everything the frontend needs
+./start.sh --services stock,cart,order,chatbot # pick which services to start
+./start.sh --skip-kafka --no-browser
+./stop.sh                                      # stop the services and Kafka
+```
+
+If you get `permission denied`, run `chmod +x start.sh stop.sh` once, or use
+`bash start.sh`.
+
 Serving the frontend needs Python or Node.js. If VS Code Live Server is
 already running on port `5500`, the script uses it instead.
 
